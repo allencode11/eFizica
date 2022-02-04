@@ -22,7 +22,7 @@ const cards = [
   {
     id: 3,
     image: 'https://source.unsplash.com/random',
-    heading: 'Informatii',
+    heading: 'Tabele',
     content: 'Lorem ipsum prof de fizica',
     location: '/info',
   }

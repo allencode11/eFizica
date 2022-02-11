@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
+import { signInWithGoogle } from '../../firebase/firebase.utils';
 
 const pages = [
     {
@@ -108,6 +109,7 @@ export const Header = () => {
             ))}
           </Box>
         </Toolbar>
+             <Button variant="text" onClick={signInWithGoogle} style={{color: 'white'}}>Sign In</Button>
       </Container>
     </AppBar>
   );

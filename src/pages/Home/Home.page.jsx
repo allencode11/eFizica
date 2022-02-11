@@ -7,23 +7,23 @@ import { useNavigate } from 'react-router-dom';
 const cards = [
   {
     id: 1,
-    image: 'https://source.unsplash.com/random',
+    image: 'https://toppng.com/uploads/preview/lanning-icon-you-will-ace-the-test-11563381838fmsgajkbay.png',
     heading: 'Teste',
-    content: 'Lorem ipsum prof de fizica',
+    content: 'Genereaza un test',
     location: '/teste',
   },
   {
     id: 2,
-    image: 'https://source.unsplash.com/random',
+    image: 'https://www.clipartmax.com/png/middle/357-3579630_energy-lab-lever-load-physics-pulley-work-icon-physics-lab-icon.png',
     heading: 'Laboratoare',
-    content: 'Lorem ipsum prof de fizica',
+    content: 'Descarca laborator',
     location: '/lab',
   },
   {
     id: 3,
-    image: 'https://source.unsplash.com/random',
+    image: 'https://png.pngtree.com/element_our/20200609/ourmid/pngtree-simple-table-border-image_2232100.jpg',
     heading: 'Tabele',
-    content: 'Lorem ipsum prof de fizica',
+    content: 'Vizualizare tabele',
     location: '/info',
   }
 ]

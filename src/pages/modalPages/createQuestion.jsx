@@ -3,8 +3,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
-import { Typography } from '@mui/material';
+import { Input, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 export const CreateQuestion = () => {
   const [questionType, setQuestionType] = useState(null);
@@ -78,11 +79,9 @@ export const CreateQuestion = () => {
                 label="condition"
                 variant="standard" />
 
-              <TextField
-                style={{ width: '100%', margin: 2}}
-                id="standard-basic"
-                label="image"
-                variant="standard" />
+              <label htmlFor="contained-button-file">
+                <Input style={{ width: '100%', margin: 2}} accept="image/*" id="contained-button-file" multiple type="file" />
+              </label>
             </div>
           ) : questionType === 'correspondence' ? (
             <div>
@@ -109,6 +108,9 @@ export const CreateQuestion = () => {
               variant="standard" />
           )
         }
+        <Button style={{marginTop: 5}} variant="contained" href="#contained-buttons">
+          Submit
+        </Button>
       </FormControl>
     </div>
   )

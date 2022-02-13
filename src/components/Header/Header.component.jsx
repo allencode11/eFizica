@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,6 +11,8 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import { signInWithGoogle } from '../../firebase/firebase.utils';
+import {Register} from "../../pages/modalPages/register";
+import {Modal} from "@mui/material";
 
 const pages = [
     {
@@ -22,13 +24,14 @@ const pages = [
       location: '/lab'
     },
     {
-      name: 'Informatii',
-      location: '/info'
+        name: 'Informatii',
+        location: '/info'
     },
   ];
 
 export const Header = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [open, setOpen] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -107,10 +110,35 @@ export const Header = () => {
                 <Link style={{ color: 'white' }} to={page.location}>{page.name}</Link>
               </Button>
             ))}
+              <div style={{position: "absolute", top: 15, right: 5}}>
+                  <Button style={{color: 'white'}} onClick={signInWithGoogle}>Sign in</Button>
+                  <Button style={{color: 'white'}} onClick={() => setOpen(!open)}>Sign up</Button>
+              </div>
           </Box>
         </Toolbar>
-             <Button variant="text" onClick={signInWithGoogle} style={{color: 'white'}}>Sign In</Button>
+      <Modal
+          open={open}
+          onClose={() => setOpen(!open)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+      >
+          <Box sx={modalstyle}>
+              <Register />
+          </Box>
+      </Modal>
       </Container>
     </AppBar>
   );
 }
+
+const modalstyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+};

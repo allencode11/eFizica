@@ -13,6 +13,7 @@ import { Link } from 'react-router-dom';
 import { signInWithGoogle } from '../../firebase/firebase.utils';
 import {Register} from "../../pages/modalPages/register";
 import {Modal} from "@mui/material";
+import { auth } from '../../firebase/firebase.utils';
 
 const pages = [
     {
@@ -29,7 +30,7 @@ const pages = [
     },
   ];
 
-export const Header = () => {
+export const Header = ({ currentUser }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [open, setOpen] = useState(false);
 
@@ -111,8 +112,19 @@ export const Header = () => {
               </Button>
             ))}
               <div style={{position: "absolute", top: 15, right: 5}}>
-                  <Button style={{color: 'white'}} onClick={signInWithGoogle}>Sign in</Button>
-                  <Button style={{color: 'white'}} onClick={() => setOpen(!open)}>Sign up</Button>
+                  {
+                      currentUser ? (
+                          <div>
+                              <Button style={{color: 'white'}} onClick={() => {}}>{currentUser.name}</Button>
+                              <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Sign out</Button>
+                          </div>
+                              ) : (
+                          <div>
+                              <Button style={{color: 'white'}} onClick={signInWithGoogle}>Sign in</Button>
+                              <Button style={{color: 'white'}} onClick={() => setOpen(!open)}>Sign up</Button>
+                          </div>
+                      )
+                  }
               </div>
           </Box>
         </Toolbar>

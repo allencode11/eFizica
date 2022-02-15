@@ -12,20 +12,40 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
 
   useEffect( () => {
-    auth.onAuthStateChanged( user => setCurrentUser(user))
+    auth.onAuthStateChanged( user => {
+        setCurrentUser(user)
+        console.log(user);
+    })
   }, [currentUser]);
 
-  return (
-    <>
-      <Header/>
-      <Routes>
-        <Route path="/" exact element={<HomePage />} />
-        <Route path="/tests" element={<TestPage />} />
-          <Route path="/lab" element={<TestPage />} />
-          <Route path="/tables" element={<HomePage />} />
-      </Routes>
-    </>
-  );
+    // constructor() {
+    //     super();
+    //
+    //     this.state = {
+    //         currentUser: null
+    //     }
+    // };
+    //
+    // componentDidMount() {
+    //     auth.onAuthStateChanged( user => {
+    //         this.setState({currentUser: user});
+    //
+    //         console.log(user);
+    //     })
+    // }
+    //
+    // render() {
+    return (
+        <>
+            <Header currentUser={currentUser}/>
+            <Routes>
+                <Route path="/" exact element={<HomePage />} />
+                <Route path="/tests" element={<TestPage />} />
+                <Route path="/lab" element={<TestPage />} />
+                <Route path="/tables" element={<HomePage />} />
+            </Routes>
+        </>
+    );
 }
 
 export default App;

@@ -10,7 +10,7 @@ const cards = [
     image: 'https://toppng.com/uploads/preview/lanning-icon-you-will-ace-the-test-11563381838fmsgajkbay.png',
     heading: 'Teste',
     content: 'Genereaza un test',
-    location: '/teste',
+    location: '/tests',
   },
   {
     id: 2,
@@ -24,7 +24,7 @@ const cards = [
     image: 'https://png.pngtree.com/element_our/20200609/ourmid/pngtree-simple-table-border-image_2232100.jpg',
     heading: 'Tabele',
     content: 'Vizualizare tabele',
-    location: '/info',
+    location: '/tables',
   }
 ]
 

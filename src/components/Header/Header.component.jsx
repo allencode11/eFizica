@@ -17,15 +17,15 @@ import {Modal} from "@mui/material";
 const pages = [
     {
       name: 'Teste',
-      location: '/teste'
+      location: '/tests'
     },
     {
       name: 'Laboratoare',
       location: '/lab'
     },
     {
-        name: 'Informatii',
-        location: '/info'
+        name: 'Tabele',
+        location: '/tables'
     },
   ];
 

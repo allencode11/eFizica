@@ -6,10 +6,12 @@ import { useState } from 'react';
 import { Input, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import {createUserAccountDocument} from "../../firebase/firebase.utils";
 
 export const Register = () => {
   const [name, setName] = useState(null);
   const [surname, setSurname] = useState(null);
+  const [password, setPassword] = useState(null);
   const [email, setEmail] = useState(null);
   const [institution, setInstitution] = useState(null);
 
@@ -24,6 +26,9 @@ export const Register = () => {
   };
   const handleInstitution = (event) => {
     setInstitution(event.target.value);
+  };
+  const handlePassword = (event) => {
+    setPassword(event.target.value);
   };
 
   return (
@@ -56,8 +61,17 @@ export const Register = () => {
             label="institution"
             onChange={handleInstitution}
             variant="standard"/>
+        <TextField
+            style={{ width: '100%', margin: 2}}
+            id="standard-basic"
+            label="password"
+            onChange={handlePassword}
+            variant="standard"/>
 
-        <Button style={{marginTop: 5}} variant="contained" href="#contained-buttons">
+        <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
+          await createUserAccountDocument({email, name, surname, institution, password})
+
+        }}>
           Submit
         </Button>
       </FormControl>

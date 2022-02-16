@@ -12,6 +12,39 @@ const config = {
   measurementId: "G-YWX6937NJY"
 };
 
+export const createUserAccountDocument = async (userAuth, additionalData) => {
+  if(!userAuth) return;
+
+  const { email, name, surname, institution, password } = userAuth;
+
+  const userRef = firestore.collection('users');
+  const q = userRef.where("email", "==", email);
+
+  const querySnapshot = await q.get();
+
+  if(querySnapshot.empty === false) {
+    return;
+  } else {
+    const createdAt = new Date();
+
+    try {
+          await userRef.add({
+            name,
+            email,
+            institution,
+            surname,
+            password,
+            createdAt,
+            ...additionalData
+          })
+        } catch (error) {
+          console.error(error);
+        }
+  }
+
+  return userRef;
+}
+
 firebase.initializeApp(config);
 
 const provider = new firebase.auth.GoogleAuthProvider();
@@ -19,6 +52,8 @@ provider.setCustomParameters({ prompt: 'select_account'})
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = async () => {
+  await auth.signInWithPopup(provider);
+}
 
 export default firebase;

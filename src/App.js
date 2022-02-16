@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserAccountDocument } from './firebase/firebase.utils';
 
 import './App.css';
 
@@ -12,29 +12,11 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
 
   useEffect( () => {
-    auth.onAuthStateChanged( user => {
-        setCurrentUser(user)
-        console.log(user);
+    auth.onAuthStateChanged( async user => {
+        await createUserAccountDocument(user);
     })
   }, [currentUser]);
 
-    // constructor() {
-    //     super();
-    //
-    //     this.state = {
-    //         currentUser: null
-    //     }
-    // };
-    //
-    // componentDidMount() {
-    //     auth.onAuthStateChanged( user => {
-    //         this.setState({currentUser: user});
-    //
-    //         console.log(user);
-    //     })
-    // }
-    //
-    // render() {
     return (
         <>
             <Header currentUser={currentUser}/>

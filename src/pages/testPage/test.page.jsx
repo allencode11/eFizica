@@ -1,4 +1,4 @@
- import { Container, Typography, Button, Card, CardContent, Modal } from '@mui/material';
+import { Container, Typography, Button, Card, CardContent, Modal } from '@mui/material';
 import { useState } from 'react';
 import { TestData } from './data';
 import Box from '@mui/material/Box';

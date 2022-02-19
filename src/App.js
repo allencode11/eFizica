@@ -7,6 +7,7 @@ import './App.css';
 import { Header } from './components/Header/Header.component';
 import { HomePage } from './pages/Home/Home.page';
 import { TestPage } from './pages/testPage/test.page';
+import { PrintedTest } from './pages/printedTestPage/printedTest';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
@@ -24,7 +25,7 @@ function App() {
                 <Route path="/" exact element={<HomePage />} />
                 <Route path="/tests" element={<TestPage />} />
                 <Route path="/lab" element={<TestPage />} />
-                <Route path="/tables" element={<HomePage />} />
+                <Route path="/printedTest" element={<PrintedTest />} />
             </Routes>
         </>
     );

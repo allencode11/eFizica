@@ -70,7 +70,6 @@ export const Register = () => {
 
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
           await createUserAccountDocument({email, name, surname, institution, password})
-
         }}>
           Submit
         </Button>

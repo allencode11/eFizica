@@ -3,10 +3,24 @@ import { useState } from 'react';
 import { TestData } from './data';
 import Box from '@mui/material/Box';
 import { CreateQuestion} from '../modalPages/createQuestion';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import { getQuestion } from '../../firebase/firebase.utils';
 
 export const TestPage = () => {
   const [tests, setTests] = useState(TestData);
   const [open, setOpen] = useState(false);
+  const [grade, setGrade] = useState(false);
+  const [module, setModule] = useState(false);
+
+  const handleGrade = (event) => {
+    setGrade(event.target.value);
+  };
+  const handleModule = (event) => {
+    setModule(event.target.value);
+  };
 
   return (
     <Container maxWidth="md">
@@ -23,7 +37,51 @@ export const TestPage = () => {
           Creaza intrebare
         </Button>
       </div>
-      <hr />
+
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+        <div style={{width: 300}}>
+          <InputLabel id="demo-simple-select-label">Module</InputLabel>
+          <Select style={{width: '100%'}}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={module}
+            label="Grade"
+            onChange={handleModule}
+          >
+            <MenuItem value={'forta'}>Forta</MenuItem>
+            <MenuItem value={'oscilatii'}>oscilatii</MenuItem>
+            <MenuItem value={'8'}>8</MenuItem>
+          </Select>
+        </div>
+
+        <div style={{width: 300}}>
+          <InputLabel id="demo-simple-select-label">Grade</InputLabel>
+          <Select style={{width: '100%'}}
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={grade}
+            label="Grade"
+            onChange={handleGrade}
+          >
+            <MenuItem value={6}>6</MenuItem>
+            <MenuItem value={7}>7</MenuItem>
+            <MenuItem value={8}>8</MenuItem>
+            <MenuItem value={9}>9</MenuItem>
+            <MenuItem value={10}>10</MenuItem>
+            <MenuItem value={11}>11</MenuItem>
+            <MenuItem value={12}>12</MenuItem>
+          </Select>
+        </div>
+
+        <Button
+          style={{width: 100, height: 45, marginTop: 27}}
+          variant="contained" onClick={ async () => {
+            console.log(tests)
+            setTests( await getQuestion(grade, module))
+          }}>
+          Cauta
+        </Button>
+      </div>
       {
         tests.map((test) => {
           return (
@@ -40,16 +98,16 @@ export const TestPage = () => {
                 }}>
                   <CardContent>
                     <Typography>{
-                        question.type === 'complete' ? (
-                           <div>{ question.content.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
-                        ) : question.type === 'corespondence' ? (
+                        question.questionType === 'complete' ? (
+                           <div>{ question.condition.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
+                        ) : question.questionType === 'corespondence' ? (
                             <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
                                 <div style={{width: '40%'}}>{question.variables.map( (variable) => (<div>{variable + '  -'}</div>))}</div>
                                 <div style={{width: '40%'}}>{question.units.map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
                             </div>
-                        ) : question.type === 'problem1' ? (
+                        ) : question.questionType === 'problem1' ? (
                             <div>
-                                <div>{question.content}</div>
+                                <div>{question.condition}</div>
                                 {[
                                     ...Array(question.lines),
                                 ].map((value, index) => (
@@ -57,15 +115,15 @@ export const TestPage = () => {
                                 ))
                                 }
                             </div>
-                        ) : question.type === 'problem2' ? (
+                        ) : question.questionType === 'problem2' ? (
                         <div style={{flexDirection: 'row'}}>
-                        <div>{question.content}</div>
-                        <img style={{width: `${question.size}`, height: 'auto'}} src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VSsB5gjCBI_3QFkKTlzI3gHaDt%26pid%3DApi&f=1" />
+                        <div>{question.condition}</div>
+                        <img style={{width: `${question.size}`, height: 'auto'}} src="https://external-Content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VSsB5gjCBI_3QFkKTlzI3gHaDt%26pid%3DApi&f=1" />
                         </div>
-                        ) : question.type === 'boolean' ? (
+                        ) : question.questionType === 'boolean' ? (
                             <div>
                                 {
-                                    question.content.map( element => (
+                                    question.condition.map( element => (
                                         <div style={{display: 'flex', flexDirection: 'row'}}>
                                             <div style={{width: '90%'}}>{element}</div>
                                             <div style={{width: '10%', textAlign: 'center'}}> A  F </div>

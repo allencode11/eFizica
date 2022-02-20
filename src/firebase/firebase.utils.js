@@ -45,6 +45,53 @@ export const createUserAccountDocument = async (userAuth, additionalData) => {
   return userRef;
 }
 
+export const createQuestion = async ( grade, module, {...question }) => {
+  if(!question && !grade && !module) return;
+
+  const questionRef = firestore.collection(`physics/${grade}/${module}`);
+  const createdAt = new Date();
+
+  try {
+    await questionRef.add({
+      createdAt,
+      ...question
+    })
+  } catch (error) {
+    console.error(error);
+  }
+
+  return;
+}
+
+export const getQuestion = async ( grade, module) => {
+  if(!grade && !module) return;
+
+  const itemsArr = [];
+
+  const questionRef = firestore.collection(`physics/${grade}/${module}`);
+  const querySnapshot = await questionRef.get();
+
+  querySnapshot.docs.forEach(item=>{
+
+    itemsArr.push(item.data())
+
+  })
+
+  console.log([{
+    "discipline": 'Fizica',
+    "grade": grade,
+    "module": module,
+    "questions": itemsArr,
+  }]);
+
+  return [{
+    "discipline": 'Fizica',
+    "grade": grade,
+    "module": module,
+    "questions": itemsArr,
+  }];
+}
+
 firebase.initializeApp(config);
 
 const provider = new firebase.auth.GoogleAuthProvider();

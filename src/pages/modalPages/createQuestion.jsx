@@ -6,20 +6,40 @@ import { useState } from 'react';
 import { Input, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { createQuestion } from '../../firebase/firebase.utils';
 
 export const CreateQuestion = () => {
   const [questionType, setQuestionType] = useState(null);
   const [grade, setGrade] = useState(null);
-  const [variables, setVariables] = useState(null);
   const [units, setUnits] = useState(null);
   const [condition, setCondition] = useState(null);
   const [image, setImage] = useState(null);
+  const [module, setModule] = useState(null);
+  const [imgSize, setImgSize] = useState(null);
+  const [s1, setS1] = useState(null);
+  const [s2, setS2] = useState(null);
+  const [s3, setS3] = useState(null);
 
   const changeQuestionType = (event) => {
     setQuestionType(event.target.value);
   };
+  const handleImgSize = (event) => {
+    setImgSize(event.target.value);
+  };
+  const handleS1 = (event) => {
+    setS1(event.target.value);
+  };
+  const handleS2= (event) => {
+    setS2(event.target.value);
+  };
+  const handleS3 = (event) => {
+    setS3(event.target.value);
+  };
   const handleChangeGrade = (event) => {
     setGrade(event.target.value);
+  };
+  const handleChangeModule = (event) => {
+    setModule(event.target.value);
   };
   const handleChangeCondition = (event) => {
     setCondition(event.target.value);
@@ -52,7 +72,7 @@ export const CreateQuestion = () => {
           <MenuItem value={'problem2'}>problem2</MenuItem>
         </Select>
       </FormControl>
-      <FormControl fullWidth>
+      <FormControl fullWidth style={{ marginBottom: 20 }}>
         <InputLabel id="demo-simple-select-label">Grade</InputLabel>
         <Select
           labelId="demo-simple-select-label"
@@ -69,6 +89,22 @@ export const CreateQuestion = () => {
           <MenuItem value={11}>11</MenuItem>
           <MenuItem value={12}>12</MenuItem>
         </Select>
+      </FormControl>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Module</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={module}
+          label="Module"
+          onChange={handleChangeModule}
+        >
+          <MenuItem value={'forta'}>Forta</MenuItem>
+          <MenuItem value={'oscilatii'}>oscilatii</MenuItem>
+          <MenuItem value={'8'}>8</MenuItem>
+        </Select>
+      </FormControl>
+      <FormControl fullWidth>
         {
           questionType === 'problem2' ? (
             <div>
@@ -79,9 +115,22 @@ export const CreateQuestion = () => {
                 label="condition"
                 variant="standard" />
 
+              <TextField
+                style={{ width: '100%', margin: 2}}
+                onChange={handleImgSize}
+                id="standard-basic"
+                label="image width"
+                variant="standard" />
+
               <label htmlFor="contained-button-file">
                 <Input style={{ width: '100%', margin: 2}} accept="image/*" id="contained-button-file" multiple type="file" />
               </label>
+              <TextField
+                style={{ width: '100%', margin: 2}}
+                onChange={handleImgSize}
+                id="standard-basic"
+                label="imgSize"
+                variant="standard" />
             </div>
           ) : questionType === 'correspondence' ? (
             <div>
@@ -99,16 +148,58 @@ export const CreateQuestion = () => {
                 label="units"
                 variant="standard" />
             </div>
-          ) : (
+          ) : questionType === 'problem1' ? (
             <TextField
               style={{ width: '100%', margin: 2 }}
               onChange={handleChangeCondition}
               id="standard-basic"
               label="sentence"
               variant="standard" />
+          ) : (
+            <div>
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleS1}
+                id="standard-basic"
+                label="sentence number one"
+                variant="standard" />
+
+              <TextField
+              style={{ width: '100%', margin: 2 }}
+              onChange={handleS2}
+              id="standard-basic"
+              label="sentence number two"
+              variant="standard" />
+
+              <TextField
+              style={{ width: '100%', margin: 2 }}
+              onChange={handleS3}
+              id="standard-basic"
+              label="sentence number three"
+              variant="standard" />
+            </div>
           )
         }
-        <Button style={{marginTop: 5}} variant="contained" href="#contained-buttons">
+        <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
+
+          switch (questionType) {
+            case 'complete':
+             await createQuestion( grade, module, {questionType, questions: { s1, s2, s3 } })
+              break;
+            case 'problem1':
+              await createQuestion( grade, module, {questionType, questions: { condition }})
+              break;
+            case 'problem2':
+              await createQuestion( grade, module, {questionType, questions: {condition, image, imgSize}})
+              break;
+            case 'correspondence':
+              await createQuestion( grade, module, {questionType, questions: {condition, units}})
+              break;
+            case 'boolean':
+              await createQuestion( grade, module, {questionType, questions: {s1, s2, s3}})
+              break;
+          };
+        }}>
           Submit
         </Button>
       </FormControl>

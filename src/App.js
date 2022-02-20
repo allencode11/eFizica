@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { auth, createUserAccountDocument } from './firebase/firebase.utils';
+import { useLocation } from 'react-router-dom'
 
 import './App.css';
 
@@ -12,6 +13,8 @@ import { PrintedTest } from './pages/printedTestPage/printedTest';
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
 
+  const currentUrl = window.location.pathname;
+
   useEffect( () => {
     auth.onAuthStateChanged( async user => {
         await createUserAccountDocument(user);
@@ -20,7 +23,9 @@ function App() {
 
     return (
         <>
-            <Header currentUser={currentUser}/>
+          {
+            currentUrl === '/printedTest' ? null : <Header currentUser={currentUser}/>
+          }
             <Routes>
                 <Route path="/" exact element={<HomePage />} />
                 <Route path="/tests" element={<TestPage />} />

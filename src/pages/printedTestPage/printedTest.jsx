@@ -100,7 +100,7 @@ export const PrintedTest = () => {
                 borderLeft: '2px solid black',
               }}>1.</Typography>
 
-              <div sx={{
+              <Typography sx={{
                 width: 727,
                 textAlign: 'left',
                 padding: 1.5,
@@ -149,9 +149,9 @@ export const PrintedTest = () => {
                   </div>
                 ) : <div>Err</div>
               }
-              </div>
+              </Typography>
               <Typography sx={{
-                width: 51,
+                width: 30,
                 textAlign: 'center',
                 padding: 1.5,
                 borderRight: '2px solid black',

@@ -1,26 +1,29 @@
 import { Container, Typography, Button, Card, CardContent, Modal } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TestData } from './data';
 import Box from '@mui/material/Box';
 import { CreateQuestion} from '../modalPages/createQuestion';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import { getQuestion } from '../../firebase/firebase.utils';
 
 export const TestPage = () => {
   const [tests, setTests] = useState(TestData);
   const [open, setOpen] = useState(false);
-  const [grade, setGrade] = useState(false);
-  const [module, setModule] = useState(false);
+  const [grade, setGrade] = useState('7');
+  const [module, setModule] = useState('forta');
 
   const handleGrade = (event) => {
     setGrade(event.target.value);
   };
-  const handleModule = (event) => {
+  const handleModule = async (event) => {
     setModule(event.target.value);
-  };
+  }
+
+  useEffect(async () => {
+    setTests( await getQuestion(grade, module))
+  });
 
   return (
     <Container maxWidth="md">
@@ -72,15 +75,6 @@ export const TestPage = () => {
             <MenuItem value={12}>12</MenuItem>
           </Select>
         </div>
-
-        <Button
-          style={{width: 100, height: 45, marginTop: 27}}
-          variant="contained" onClick={ async () => {
-            console.log(tests)
-            setTests( await getQuestion(grade, module))
-          }}>
-          Cauta
-        </Button>
       </div>
       {
         tests.map((test) => {
@@ -100,25 +94,31 @@ export const TestPage = () => {
                     <Typography>{
                         question.questionType === 'complete' ? (
                            <div>{ question.condition.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
-                        ) : question.questionType === 'corespondence' ? (
+                        ) : question.questionType === 'correspondence' ? (
                             <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
-                                <div style={{width: '40%'}}>{question.variables.map( (variable) => (<div>{variable + '  -'}</div>))}</div>
-                                <div style={{width: '40%'}}>{question.units.map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
+                                <div style={{width: '40%'}}>{question.condition[0].split(',').map( (variable) => (<div>{variable + '  -'}</div>))}</div>
+                                <div style={{width: '40%'}}>{question.condition[1].split(',').map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
                             </div>
                         ) : question.questionType === 'problem1' ? (
                             <div>
-                                <div>{question.condition}</div>
+                                <div>{question.condition[0]}</div>
                                 {[
-                                    ...Array(question.lines),
+                                    ...Array(Number(question.condition[1])),
                                 ].map((value, index) => (
                                     <div style={{height: 15}} id={index + 1} key={index}/>
                                 ))
                                 }
                             </div>
                         ) : question.questionType === 'problem2' ? (
-                        <div style={{flexDirection: 'row'}}>
-                        <div>{question.condition}</div>
-                        <img style={{width: `${question.size}`, height: 'auto'}} src="https://external-Content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VSsB5gjCBI_3QFkKTlzI3gHaDt%26pid%3DApi&f=1" />
+                        <div style={{flexDirection: 'column'}}>
+                          <div>{question.condition[0]}</div>
+                          <img style={{width: `${question.condition[2]}`, height: 'auto'}} src={question.condition[1]}/>
+                          {[
+                            ...Array(Number(question.condition[3])),
+                          ].map((value, index) => (
+                            <div style={{height: 15}} id={index + 1} key={index}/>
+                          ))
+                          }
                         </div>
                         ) : question.questionType === 'boolean' ? (
                             <div>

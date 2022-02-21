@@ -12,19 +12,24 @@ export const CreateQuestion = () => {
   const [questionType, setQuestionType] = useState(null);
   const [grade, setGrade] = useState(null);
   const [units, setUnits] = useState(null);
+  const [lines, setLines] = useState(null);
   const [condition, setCondition] = useState(null);
-  const [image, setImage] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
   const [module, setModule] = useState(null);
-  const [imgSize, setImgSize] = useState(null);
+  const [size, setSize] = useState(null);
   const [s1, setS1] = useState(null);
   const [s2, setS2] = useState(null);
   const [s3, setS3] = useState(null);
+  const [s4, setS4] = useState(null);
 
   const changeQuestionType = (event) => {
     setQuestionType(event.target.value);
   };
-  const handleImgSize = (event) => {
-    setImgSize(event.target.value);
+  const handleSize = (event) => {
+    setSize(event.target.value);
+  };
+  const handleLines = (event) => {
+    setLines(event.target.value);
   };
   const handleS1 = (event) => {
     setS1(event.target.value);
@@ -35,6 +40,9 @@ export const CreateQuestion = () => {
   const handleS3 = (event) => {
     setS3(event.target.value);
   };
+  const handleS4 = (event) => {
+    setS4(event.target.value);
+  };
   const handleChangeGrade = (event) => {
     setGrade(event.target.value);
   };
@@ -44,8 +52,8 @@ export const CreateQuestion = () => {
   const handleChangeCondition = (event) => {
     setCondition(event.target.value);
   };
-  const handleChangeImage = (event) => {
-    setImage(event.target.value);
+  const handleChangeImageUrl = (event) => {
+    setImageUrl(event.target.value);
   };
   const handleChangeUnits = (event) => {
     setUnits(event.target.value);
@@ -104,6 +112,7 @@ export const CreateQuestion = () => {
           <MenuItem value={'8'}>8</MenuItem>
         </Select>
       </FormControl>
+
       <FormControl fullWidth>
         {
           questionType === 'problem2' ? (
@@ -116,21 +125,27 @@ export const CreateQuestion = () => {
                 variant="standard" />
 
               <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleLines}
+                id="standard-basic"
+                label="lines"
+                variant="standard" />
+
+              <TextField
                 style={{ width: '100%', margin: 2}}
-                onChange={handleImgSize}
+                onChange={handleSize}
                 id="standard-basic"
                 label="image width"
                 variant="standard" />
 
               <label htmlFor="contained-button-file">
-                <Input style={{ width: '100%', margin: 2}} accept="image/*" id="contained-button-file" multiple type="file" />
+                <Input onChange={handleChangeImageUrl}
+                       style={{ width: '100%', margin: 2}}
+                       accept="image/*"
+                       id="contained-button-file"
+                       multiple type="file"
+                />
               </label>
-              <TextField
-                style={{ width: '100%', margin: 2}}
-                onChange={handleImgSize}
-                id="standard-basic"
-                label="imgSize"
-                variant="standard" />
             </div>
           ) : questionType === 'correspondence' ? (
             <div>
@@ -138,7 +153,7 @@ export const CreateQuestion = () => {
                 style={{ width: '100%', margin: 2}}
                 id="standard-basic"
                 label="variables"
-                onChange={handleChangeImage}
+                onChange={handleChangeCondition}
                 variant="standard"/>
 
               <TextField
@@ -149,13 +164,21 @@ export const CreateQuestion = () => {
                 variant="standard" />
             </div>
           ) : questionType === 'problem1' ? (
-            <TextField
-              style={{ width: '100%', margin: 2 }}
-              onChange={handleChangeCondition}
-              id="standard-basic"
-              label="sentence"
-              variant="standard" />
-          ) : (
+            <div>
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleChangeCondition}
+                id="standard-basic"
+                label="sentence"
+                variant="standard" />
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleLines}
+                id="standard-basic"
+                label="lines"
+                variant="standard" />
+            </div>
+          ) : questionType === 'complete' ? (
             <div>
               <TextField
                 style={{ width: '100%', margin: 2 }}
@@ -177,6 +200,37 @@ export const CreateQuestion = () => {
               id="standard-basic"
               label="sentence number three"
               variant="standard" />
+
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleS4}
+                id="standard-basic"
+                label="sentence number four"
+                variant="standard" />
+            </div>
+          ) : (
+            <div>
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleS1}
+                id="standard-basic"
+                label="sentence number one"
+                variant="standard" />
+
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleS2}
+                id="standard-basic"
+                label="sentence number two"
+                variant="standard" />
+
+              <TextField
+                style={{ width: '100%', margin: 2 }}
+                onChange={handleS3}
+                id="standard-basic"
+                label="sentence number three"
+                variant="standard" />
+
             </div>
           )
         }
@@ -184,19 +238,19 @@ export const CreateQuestion = () => {
 
           switch (questionType) {
             case 'complete':
-             await createQuestion( grade, module, {questionType, questions: { s1, s2, s3 } })
+             await createQuestion( grade, module, {questionType, condition: [ s1, s2, s3, s4 ] })
               break;
             case 'problem1':
-              await createQuestion( grade, module, {questionType, questions: { condition }})
+              await createQuestion( grade, module, {questionType, condition: [ condition, lines ]})
               break;
             case 'problem2':
-              await createQuestion( grade, module, {questionType, questions: {condition, image, imgSize}})
+              await createQuestion( grade, module, {questionType, condition: [ condition, imageUrl, size, lines ]})
               break;
             case 'correspondence':
-              await createQuestion( grade, module, {questionType, questions: {condition, units}})
+              await createQuestion( grade, module, {questionType, condition: [ condition, units]})
               break;
             case 'boolean':
-              await createQuestion( grade, module, {questionType, questions: {s1, s2, s3}})
+              await createQuestion( grade, module, {questionType, condition: [ s1, s2, s3 ]})
               break;
           };
         }}>

@@ -1,7 +1,7 @@
 export const TestData = [
   {
     "discipline": "Fizica",
-    "class": 7,
+    "grade": 7,
     "module": "Forta Arhimede",
     "questions": [
       {
@@ -15,9 +15,9 @@ export const TestData = [
       },
       {
         "id": 1,
-        "questionType": "corespondence",
-        "variables": ["Presiunea hidrosferică", "Densitatea lichidului", "Înălțimea", "Accelerația gravitațională", "Volumul"],
-        "units": [ "cm", "kg/m3", "m3", "N·m", "MPa", "N/kg" ]
+        "questionType": "correspondence",
+        "condition": ["Presiunea hidrosferică, Densitatea lichidului, Înălțimea, Accelerația gravitațională, Volumul",
+          "cm, kg/m3, m3, N·m, MPa, N/kg" ]
       },
       {
         "id": 2,
@@ -29,28 +29,23 @@ export const TestData = [
       {
         "id": 3,
         "questionType": "problem1",
-        "condition": "Ce forță exercită o presiune de 400kPa pe o arie de 15cm^2 ?",
-        "lines": 3
+        "condition": ["Ce forță exercită o presiune de 400kPa pe o arie de 15cm^2 ?", 3]
       },
       {
         "id": 4,
         "questionType": "problem1",
-        "condition": "Determină presiunea exercitată asupra fundului unui pahar cu înălțimea de 12 cm plin cu lapte ρ=1030.",
-        "lines": 1
+        "condition": ["Determină presiunea exercitată asupra fundului unui pahar cu înălțimea de 12 cm plin cu lapte ρ=1030.", 1]
       },
       {
         "id": 5,
         "questionType": "problem1",
-        "condition": "Determină presiunea atmosferică la înălțimea de 9 km. (ρ0 = 1,29.)",
-        "lines": 5,
+        "condition": ["Determină presiunea atmosferică la înălțimea de 9 km. (ρ0 = 1,29.)", 5]
       },
       {
         "id": 6,
         "questionType": "problem2",
-        "condition": "În tabelul de mai jos este reprezentată dependența presiunii de adâncime a unui lichid omogen.\na) construiți graficul dependenței presiunii de adâncime;\nb) determină presiunea la adâncimea de 50 metri;\nc) La ce adâncime presiunea este de 8 MPa;\nd) Aflați masa lichidului ce formează un paralelipiped cu aria bazei de 1m 2 între adâncimile de 200 și\n1200 m.",
-        "imageUrl": "https://ibb.co/C82bPdG",
-        "size": "40%",
-        "lines": 4
+        "condition": ["În tabelul de mai jos este reprezentată dependența presiunii de adâncime a unui lichid omogen. a) construiți graficul dependenței presiunii de adâncime;\nb) determină presiunea la adâncimea de 50 metri;\nc) La ce adâncime presiunea este de 8 MPa;\nd) Aflați masa lichidului ce formează un paralelipiped cu aria bazei de 1m 2 între adâncimile de 200 și\n1200 m.",
+         "https://ibb.co/C82bPdG", "40%", 4]
       }
     ]
   }

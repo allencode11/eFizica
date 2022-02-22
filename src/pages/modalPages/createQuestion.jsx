@@ -107,9 +107,11 @@ export const CreateQuestion = () => {
           label="Module"
           onChange={handleChangeModule}
         >
-          <MenuItem value={'forta'}>Forta</MenuItem>
-          <MenuItem value={'oscilatii'}>oscilatii</MenuItem>
-          <MenuItem value={'8'}>8</MenuItem>
+          <MenuItem value={'Mișcarea și repausul'}>Mișcarea și repausul</MenuItem>
+          <MenuItem value={'Interacțiuni'}>Interacțiuni</MenuItem>
+          <MenuItem value={'Statica fluidelor'}>Statica fluidelor</MenuItem>
+          <MenuItem value={'Lucrul mecanic, puterea si energia mecanica'}>Lucrul mecanic, puterea și energia mecanică</MenuItem>
+          <MenuItem value={'Echilibrul de rotație'}>Echilibrul de rotație</MenuItem>
         </Select>
       </FormControl>
 

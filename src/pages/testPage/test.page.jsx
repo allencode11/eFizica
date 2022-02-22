@@ -1,5 +1,5 @@
 import { Container, Typography, Button, Card, CardContent, Modal } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { TestData } from './data';
 import Box from '@mui/material/Box';
 import { CreateQuestion} from '../modalPages/createQuestion';
@@ -14,6 +14,18 @@ export const TestPage = () => {
   const [grade, setGrade] = useState('7');
   const [module, setModule] = useState('forta');
 
+  let print = [];
+
+  const addToPrint = (print, question) => {
+    const found = print.find(element => element.id === question.id);
+    if(found) {
+      print = print.filter(element => question.id === element.id)
+    } else {
+      print.push(question);
+    }
+    console.log(print);
+    console.log(question.id);
+  }
   const handleGrade = (event) => {
     setGrade(event.target.value);
   };
@@ -21,9 +33,15 @@ export const TestPage = () => {
     setModule(event.target.value);
   }
 
-  useEffect(async () => {
-    setTests( await getQuestion(grade, module))
-  });
+  const fetchMyAPI = useCallback(async () => {
+    let questions = await getQuestion(grade, module);
+    setTests(questions);
+
+  }, [grade, module]);
+
+  useEffect( () => {
+    fetchMyAPI();
+  }, [fetchMyAPI]);
 
   return (
     <Container maxWidth="md">
@@ -51,9 +69,11 @@ export const TestPage = () => {
             label="Grade"
             onChange={handleModule}
           >
-            <MenuItem value={'forta'}>Forta</MenuItem>
-            <MenuItem value={'oscilatii'}>oscilatii</MenuItem>
-            <MenuItem value={'8'}>8</MenuItem>
+            <MenuItem value={'Miscarea si repausul'}>Miscarea si repausul</MenuItem>
+            <MenuItem value={'Interactiuni'}>Interactiuni</MenuItem>
+            <MenuItem value={'Statica fluidelor'}>Statica fluidelor</MenuItem>
+            <MenuItem value={'Lucrul mecanic, puterea si energia mecanica'}>Lucrul mecanic, puterea si energia mecanica</MenuItem>
+            <MenuItem value={'Echilibrul de rotatie'}>Echilibrul de rotatie</MenuItem>
           </Select>
         </div>
 
@@ -85,7 +105,9 @@ export const TestPage = () => {
               margin: '2rem 0',
             }}>{test.module}</Typography>
               {test.questions.map((question) => (
-                <Card style={{
+                <Card
+                  onClick={() => {addToPrint(print, question)}}
+                  style={{
                   cursor: 'pointer',
                   margin: '20px 0',
                   border: '1px solid #ccc',

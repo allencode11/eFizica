@@ -69,11 +69,11 @@ export const TestPage = () => {
             label="Grade"
             onChange={handleModule}
           >
-            <MenuItem value={'Miscarea si repausul'}>Miscarea si repausul</MenuItem>
-            <MenuItem value={'Interactiuni'}>Interactiuni</MenuItem>
+            <MenuItem value={'Mișcarea și repausul'}>Mișcarea și repausul</MenuItem>
+            <MenuItem value={'Interacțiuni'}>Interacțiuni</MenuItem>
             <MenuItem value={'Statica fluidelor'}>Statica fluidelor</MenuItem>
-            <MenuItem value={'Lucrul mecanic, puterea si energia mecanica'}>Lucrul mecanic, puterea si energia mecanica</MenuItem>
-            <MenuItem value={'Echilibrul de rotatie'}>Echilibrul de rotatie</MenuItem>
+            <MenuItem value={'Lucrul mecanic, puterea si energia mecanica'}>Lucrul mecanic, puterea și energia mecanică</MenuItem>
+            <MenuItem value={'Echilibrul de rotație'}>Echilibrul de rotație</MenuItem>
           </Select>
         </div>
 

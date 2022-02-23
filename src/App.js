@@ -27,7 +27,7 @@ function App() {
             currentUrl === '/printedTest' ? null : <Header currentUser={currentUser}/>
           }
             <Routes>
-                <Route path="/" exact element={<HomePage />} />
+                <Route path="/eFizica" exact element={<HomePage />} />
                 <Route path="/tests" element={<TestPage />} />
                 <Route path="/lab" element={<TestPage />} />
                 <Route path="/printedTest" element={<PrintedTest />} />

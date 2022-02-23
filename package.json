@@ -1,7 +1,7 @@
 {
   "name": "i-fizica",
   "version": "0.1.0",
-  "homepage": "https://allencode11.github.io/",
+  "homepage": "https://allencode11.github.io/eFizica/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.7.1",

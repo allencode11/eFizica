@@ -16,7 +16,7 @@ export const Conditions = [
     "rule": "În spaţiul rezervat prezentaţi rezolvarea completă a itemului."
   },
   {
-    "name": "corespondence",
+    "name": "correspondence",
     "rule": "Asociaţi mărimile fizice cu unităţile lor (uniţi prin săgeţi mărimea fizică cu unitatea corespunzătoare ei)."
   }
 ]

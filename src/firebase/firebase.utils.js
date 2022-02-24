@@ -77,13 +77,6 @@ export const getQuestion = async ( grade, module) => {
 
   })
 
-  console.log([{
-    "discipline": 'Fizica',
-    "grade": grade,
-    "module": module,
-    "questions": itemsArr,
-  }]);
-
   return [{
     "discipline": 'Fizica',
     "grade": grade,

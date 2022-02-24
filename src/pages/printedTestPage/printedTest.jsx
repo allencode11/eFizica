@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { TestData } from '../testPage/data';
 import { Conditions } from './conditions';
 
-export const PrintedTest = () => {
+export const PrintedTest = ( ) => {
   const [test, setTest] = useState(TestData);
   const [conditions, setConditions] = useState(Conditions);
 
@@ -17,7 +17,7 @@ export const PrintedTest = () => {
       }}>
         <Typography> Disciplina: {test[0].discipline}</Typography>
         <Typography> Data: ____________</Typography>
-        <Typography> Clasa a {test[0].class}</Typography>
+        <Typography> Clasa a {test[0].grade}-a</Typography>
       </div>
       <div style={{
         margin: '10px 0',
@@ -83,7 +83,7 @@ export const PrintedTest = () => {
         }}>Scor</Typography>
       </div>
       {
-        test[0].questions.map( question => {
+        test[0].questions.map( (question, index) => {
           return (
             <div style={{
               display: 'flex',
@@ -98,7 +98,7 @@ export const PrintedTest = () => {
                 borderRight: '2px solid black',
                 borderBottom: '2px solid black',
                 borderLeft: '2px solid black',
-              }}>1.</Typography>
+              }}>{index + 1}</Typography>
 
               <Typography sx={{
                 width: 727,
@@ -108,38 +108,38 @@ export const PrintedTest = () => {
               }}>
 
                 <div>{
-                    conditions.filter(ruleElement => ruleElement.name === 'complete').map(item => (
+                    conditions.filter(ruleElement => ruleElement.name === question.questionType).map(item => (
                       <Typography style={{fontWeight: 'bold'}}>{item.rule}</Typography>
                     ))}
                 </div>
                 {
-                question.type === 'complete' ? (
+                question.questionType === 'complete' ? (
                   <div>
-                    { question.content.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
-                ) : question.type === 'corespondence' ? (
+                    { question.condition.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
+                ) : question.questionType === 'correspondence' ? (
                   <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
-                    <div style={{width: '40%'}}>{question.variables.map( (variable) => (<div>{variable + '  -'}</div>))}</div>
-                    <div style={{width: '40%'}}>{question.units.map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
+                    <div style={{width: '40%'}}>{question.condition[0].split(',').map( (variable) => (<div>{variable + '  -'}</div>))}</div>
+                    <div style={{width: '40%'}}>{question.condition[1].split(',').map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
                   </div>
-                ) : question.type === 'problem1' ? (
+                ) : question.questionType === 'problem1' ? (
                   <div>
-                    <div>{question.content}</div>
+                    <div>{question.condition[0]}</div>
                     {[
-                      ...Array(question.lines),
+                      ...Array(question.condition[1]),
                     ].map((value, index) => (
-                      <div style={{height: 15}} id={index + 1} key={index}/>
+                      <div style={{height: 25}} id={index + 1} key={index}/>
                     ))
                     }
                   </div>
-                ) : question.type === 'problem2' ? (
+                ) : question.questionType === 'problem2' ? (
                   <div style={{flexDirection: 'row'}}>
-                    <div>{question.content}</div>
+                    <div>{question.condition}</div>
                     <img style={{width: `${question.size}`, height: 'auto'}} src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VSsB5gjCBI_3QFkKTlzI3gHaDt%26pid%3DApi&f=1" />
                   </div>
-                ) : question.type === 'boolean' ? (
+                ) : question.questionType === 'boolean' ? (
                   <div>
                     {
-                      question.content.map( element => (
+                      question.condition.map( element => (
                         <div style={{display: 'flex', flexDirection: 'row'}}>
                           <div style={{width: '90%'}}>{element}</div>
                           <div style={{width: '10%', textAlign: 'center'}}> A  F </div>

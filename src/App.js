@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { auth, createUserAccountDocument } from './firebase/firebase.utils';
-import { useLocation } from 'react-router-dom'
 
 import './App.css';
 

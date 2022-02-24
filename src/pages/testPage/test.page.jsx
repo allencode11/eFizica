@@ -7,6 +7,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { getQuestion } from '../../firebase/firebase.utils';
+import { Link } from 'react-router-dom';
 
 export const TestPage = () => {
   const [tests, setTests] = useState(TestData);
@@ -16,17 +17,23 @@ export const TestPage = () => {
 
   let print = [];
 
-  const addToPrint = (print, question) => {
-    const found = print.find(element => element.id === question.id);
+  const addToPrint = async (printTest, question) => {
+    const found = printTest.find(element => element.condition === question.condition);
     if(found) {
-      print = print.filter(element => question.id === element.id)
+      for( let i = 0; i < printTest.length; i++){
+        if ( printTest[i].condition === question.condition) {
+          printTest.splice(i, 1);
+          i--;
+        }
+      }
     } else {
-      print.push(question);
+      printTest.push(question);
     }
     console.log(print);
-    console.log(question.id);
+    console.log(printTest.find(element => element.condition === question.condition));
   }
-  const handleGrade = (event) => {
+
+  const handleGrade = async (event) => {
     setGrade(event.target.value);
   };
   const handleModule = async (event) => {
@@ -106,7 +113,7 @@ export const TestPage = () => {
             }}>{test.module}</Typography>
               {test.questions.map((question) => (
                 <Card
-                  onClick={() => {addToPrint(print, question)}}
+                  onClick={ async () => { await addToPrint(print, question)}}
                   style={{
                   cursor: 'pointer',
                   margin: '20px 0',
@@ -127,7 +134,7 @@ export const TestPage = () => {
                                 {[
                                     ...Array(Number(question.condition[1])),
                                 ].map((value, index) => (
-                                    <div style={{height: 15}} id={index + 1} key={index}/>
+                                    <div style={{height: 25}} id={index + 1} key={index}/>
                                 ))
                                 }
                             </div>
@@ -159,6 +166,7 @@ export const TestPage = () => {
                   </CardContent>
                 </Card>
               ))}
+              <Link to={"/printedTest"}>Print</Link>
             </>
             );
         })

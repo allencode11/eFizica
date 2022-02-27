@@ -43,7 +43,7 @@ export const Header = ({ currentUser }) => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#1e90ff'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

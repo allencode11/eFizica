@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import { createQuestion } from '../../firebase/firebase.utils';
 
 export const CreateQuestion = () => {
+  const [open, setopen] = useState(true);
   const [questionType, setQuestionType] = useState(null);
   const [grade, setGrade] = useState(null);
   const [units, setUnits] = useState(null);
@@ -31,18 +32,6 @@ export const CreateQuestion = () => {
   const handleLines = (event) => {
     setLines(event.target.value);
   };
-  const handleS1 = (event) => {
-    setS1(event.target.value);
-  };
-  const handleS2= (event) => {
-    setS2(event.target.value);
-  };
-  const handleS3 = (event) => {
-    setS3(event.target.value);
-  };
-  const handleS4 = (event) => {
-    setS4(event.target.value);
-  };
   const handleChangeGrade = (event) => {
     setGrade(event.target.value);
   };
@@ -61,7 +50,7 @@ export const CreateQuestion = () => {
 
   return (
     <div>
-      <Typography id="modal-modal-title" variant="h6" component="h2">
+      <Typography style={{color: '#1e90ff', marginBottom: 10}} id="modal-modal-title" variant="h6" component="h2">
         Creaza o intrebare
       </Typography>
       <FormControl fullWidth style={{ marginBottom: 20 }}>
@@ -180,83 +169,41 @@ export const CreateQuestion = () => {
                 label="lines"
                 variant="standard" />
             </div>
-          ) : questionType === 'complete' ? (
-            <div>
-              <TextField
-                style={{ width: '100%', margin: 2 }}
-                onChange={handleS1}
-                id="standard-basic"
-                label="sentence number one"
-                variant="standard" />
-
-              <TextField
-              style={{ width: '100%', margin: 2 }}
-              onChange={handleS2}
-              id="standard-basic"
-              label="sentence number two"
-              variant="standard" />
-
-              <TextField
-              style={{ width: '100%', margin: 2 }}
-              onChange={handleS3}
-              id="standard-basic"
-              label="sentence number three"
-              variant="standard" />
-
-              <TextField
-                style={{ width: '100%', margin: 2 }}
-                onChange={handleS4}
-                id="standard-basic"
-                label="sentence number four"
-                variant="standard" />
-            </div>
           ) : (
-            <div>
               <TextField
                 style={{ width: '100%', margin: 2 }}
-                onChange={handleS1}
+                onChange={handleChangeCondition}
                 id="standard-basic"
                 label="sentence number one"
                 variant="standard" />
-
-              <TextField
-                style={{ width: '100%', margin: 2 }}
-                onChange={handleS2}
-                id="standard-basic"
-                label="sentence number two"
-                variant="standard" />
-
-              <TextField
-                style={{ width: '100%', margin: 2 }}
-                onChange={handleS3}
-                id="standard-basic"
-                label="sentence number three"
-                variant="standard" />
-
-            </div>
           )
         }
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
 
           switch (questionType) {
             case 'complete':
-             await createQuestion( grade, module, {questionType, condition: [ s1, s2, s3, s4 ] })
+             await createQuestion( grade, module, {questionType, condition: condition });
+             alert('Item was added');
               break;
             case 'problem1':
-              await createQuestion( grade, module, {questionType, condition: [ condition, lines ]})
+              await createQuestion( grade, module, {questionType, condition: [ condition, lines ]});
+              alert('Item was added');
               break;
             case 'problem2':
-              await createQuestion( grade, module, {questionType, condition: [ condition, imageUrl, size, lines ]})
+              await createQuestion( grade, module, {questionType, condition: [ condition, imageUrl, size, lines ]});
+              alert('Item was added');
               break;
             case 'correspondence':
-              await createQuestion( grade, module, {questionType, condition: [ condition, units]})
+              await createQuestion( grade, module, {questionType, condition: [ condition, units]});
+              alert('Item was added');
               break;
             case 'boolean':
-              await createQuestion( grade, module, {questionType, condition: [ s1, s2, s3 ]})
+              await createQuestion( grade, module, {questionType, condition: condition });
+              alert('Item was added');
               break;
           };
         }}>
-          Submit
+          Add to db
         </Button>
       </FormControl>
     </div>

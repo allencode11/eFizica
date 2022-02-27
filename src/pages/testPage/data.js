@@ -7,11 +7,8 @@ export const TestData = [
       {
         "id": 0,
         "questionType": "complete",
-        "condition": ["Presiunea exercitată asupra lichidelor și gazelor aflate în echilibru se transmite %%% în toate punctele volumului ocupat de ele.",
-          "Presiunea exercitată de atmosferă asupra corpurilor se numește %% .",
-          "Presiunea exercitată asupra lichidelor și gazelor aflate în echilibru se transmite %%% în toate punctele volumului ocupat de ele.",
-          "Asupra corpurilor cufundate în lichid sau gaz se exercitată o forță numită % ."
-            ]
+        "condition": "Presiunea exercitată asupra lichidelor și gazelor aflate în echilibru se transmite %%% în toate punctele volumului ocupat de ele."
+
       },
       {
         "id": 1,
@@ -22,9 +19,7 @@ export const TestData = [
       {
         "id": 2,
         "questionType": "boolean",
-        "condition": ["Presiunea hidrostatică este proporțională cu adâncimea.",
-          "Mașina hidraulică dă câștig în forță.",
-          "În fiecare braț al vaselor comunicante produsul dintre densitatea lichidului și înălțimea coloanei este aceeași."]
+        "condition": "Presiunea hidrostatică este proporțională cu adâncimea."
       },
       {
         "id": 3,

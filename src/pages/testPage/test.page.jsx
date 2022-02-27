@@ -121,46 +121,40 @@ export const TestPage = () => {
                 }}>
                   <CardContent>
                     <Typography>{
-                        question.questionType === 'complete' ? (
-                           <div>{ question.condition.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
-                        ) : question.questionType === 'correspondence' ? (
-                            <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
-                                <div style={{width: '40%'}}>{question.condition[0].split(',').map( (variable) => (<div>{variable + '  -'}</div>))}</div>
-                                <div style={{width: '40%'}}>{question.condition[1].split(',').map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
-                            </div>
-                        ) : question.questionType === 'problem1' ? (
-                            <div>
-                                <div>{question.condition[0]}</div>
-                                {[
-                                    ...Array(Number(question.condition[1])),
-                                ].map((value, index) => (
-                                    <div style={{height: 25}} id={index + 1} key={index}/>
-                                ))
-                                }
-                            </div>
-                        ) : question.questionType === 'problem2' ? (
-                        <div style={{flexDirection: 'column'}}>
+                      question.questionType === 'complete' ? (
+                        <div>{ question.condition}</div>
+                      ) : question.questionType === 'correspondence' ? (
+                        <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
+                            <div style={{width: '40%'}}>{question.condition[0].split(',').map( (variable) => (<div>{variable + '  -'}</div>))}</div>
+                            <div style={{width: '40%'}}>{question.condition[1].split(',').map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
+                        </div>
+                      ) : question.questionType === 'problem1' ? (
+                        <div>
                           <div>{question.condition[0]}</div>
-                          <img style={{width: `${question.condition[2]}`, height: 'auto'}} src={question.condition[1]}/>
                           {[
-                            ...Array(Number(question.condition[3])),
+                              ...Array(Number(question.condition[1])),
                           ].map((value, index) => (
-                            <div style={{height: 15}} id={index + 1} key={index}/>
+                              <div style={{height: 25}} id={index + 1} key={index}/>
                           ))
                           }
                         </div>
-                        ) : question.questionType === 'boolean' ? (
-                            <div>
-                                {
-                                    question.condition.map( element => (
-                                        <div style={{display: 'flex', flexDirection: 'row'}}>
-                                            <div style={{width: '90%'}}>{element}</div>
-                                            <div style={{width: '10%', textAlign: 'center'}}> A  F </div>
-                                        </div>
-                                    ))
-                                }
-                            </div>
-                        ) : <div>Err</div>
+                      ) : question.questionType === 'problem2' ? (
+                      <div style={{flexDirection: 'column'}}>
+                        <div>{question.condition[0]}</div>
+                        <img style={{width: `${question.condition[2]}`, height: 'auto'}} src={question.condition[1]}/>
+                        {[
+                          ...Array(Number(question.condition[3])),
+                        ].map((value, index) => (
+                          <div style={{height: 15}} id={index + 1} key={index}/>
+                        ))
+                        }
+                      </div>
+                      ) : question.questionType === 'boolean' ? (
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <div style={{width: '90%'}}>{question.condition}</div>
+                            <div style={{width: '10%', textAlign: 'center'}}> A  F </div>
+                        </div>
+                      ) : <div>Err</div>
                     }
                     </Typography>
                   </CardContent>
@@ -179,6 +173,9 @@ export const TestPage = () => {
       >
         <Box sx={modalStyle}>
          <CreateQuestion />
+          <Button style={{marginTop: 5, width: '100%'}} variant="contained" onClick={() => setOpen(!open)} variant="contained">
+            Finish
+          </Button>
         </Box>
       </Modal>
     </Container>

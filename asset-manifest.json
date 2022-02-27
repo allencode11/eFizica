@@ -1,15 +1,18 @@
 {
   "files": {
     "main.css": "/eFizica/static/css/main.bdedff05.css",
-    "main.js": "/eFizica/static/js/main.fdf89b9c.js",
+    "main.js": "/eFizica/static/js/main.8d06c30c.js",
     "static/js/787.0fd49245.chunk.js": "/eFizica/static/js/787.0fd49245.chunk.js",
+    "static/media/labs.png": "/eFizica/static/media/labs.45f305e66c50ff4ef3b3.png",
+    "static/media/test.png": "/eFizica/static/media/test.48fb3f92ae2345ed844c.png",
+    "static/media/table.png": "/eFizica/static/media/table.e13aa1e2262f0906c0d2.png",
     "index.html": "/eFizica/index.html",
     "main.bdedff05.css.map": "/eFizica/static/css/main.bdedff05.css.map",
-    "main.fdf89b9c.js.map": "/eFizica/static/js/main.fdf89b9c.js.map",
+    "main.8d06c30c.js.map": "/eFizica/static/js/main.8d06c30c.js.map",
     "787.0fd49245.chunk.js.map": "/eFizica/static/js/787.0fd49245.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bdedff05.css",
-    "static/js/main.fdf89b9c.js"
+    "static/js/main.8d06c30c.js"
   ]
 }

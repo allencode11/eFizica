@@ -15,7 +15,7 @@ const cards = [
   {
     id: 2,
     image: require('../../assets/labs.png'),
-    heading: 'Laboratoare',
+    heading: 'Lucrări de laborator',
     content: 'Descarca laborator',
     location: '/lab',
   },
@@ -25,13 +25,27 @@ const cards = [
     heading: 'Tabele',
     content: 'Vizualizare tabele',
     location: '/tables',
+  },
+  {
+    id: 4,
+    image: require('../../assets/calendar.png'),
+    heading: 'Calendar școlar',
+    content: 'Vizualizare calendar pentru anul școlar curent',
+    location: '/calendar',
+  },
+  {
+    id: 5,
+    image: require('../../assets/proiectare.png'),
+    heading: 'Plănuire',
+    content: 'Vizualizare plănuirea calendaristică',
+    location: '/plan',
   }
 ]
 
 export const HomePage = () => {
   const navigate = useNavigate();
   return (
-    <Container sx={{ py: 8}} maxWidth="md">
+    <Container sx={{ py: 10}} maxWidth="md">
       <Grid container spacing={5}>
         {cards.map((card) => (
           <Grid item key={card.id} xs={12} sm={6} md={4}>

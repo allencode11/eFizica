@@ -115,13 +115,14 @@ export const Header = ({ currentUser }) => {
                   {
                       currentUser ? (
                           <div>
-                              <Button style={{color: 'white'}} onClick={() => {}}>{currentUser.name}</Button>
                               <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Sign out</Button>
                           </div>
                               ) : (
                           <div>
                               <Button style={{color: 'white'}} onClick={signInWithGoogle}>Sign in</Button>
-                              <Button style={{color: 'white'}} onClick={() => setOpen(!open)}>Sign up</Button>
+                              <Button style={{color: 'white'}} onClick={ () => {
+                                setOpen(!open);
+                              }}>Sign up</Button>
                           </div>
                       )
                   }

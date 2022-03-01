@@ -1,12 +1,9 @@
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
 import { useState } from 'react';
 import { Input, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import {createUserAccountDocument} from "../../firebase/firebase.utils";
+import { createUserAccountDocument, logInWithEmailAndPassword } from '../../firebase/firebase.utils';
 
 export const Register = () => {
   const [name, setName] = useState(null);
@@ -70,8 +67,9 @@ export const Register = () => {
 
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
           await createUserAccountDocument({email, name, surname, institution, password})
+          await logInWithEmailAndPassword(email, password);
         }}>
-          Submit
+          Create account
         </Button>
       </FormControl>
     </div>

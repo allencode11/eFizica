@@ -7,9 +7,11 @@ import { Input, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { createQuestion } from '../../firebase/firebase.utils';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Upload, message } from 'antd';
+import 'antd/dist/antd.css';
 
 export const CreateQuestion = () => {
-  const [open, setopen] = useState(true);
   const [questionType, setQuestionType] = useState(null);
   const [grade, setGrade] = useState(null);
   const [units, setUnits] = useState(null);
@@ -18,10 +20,36 @@ export const CreateQuestion = () => {
   const [imageUrl, setImageUrl] = useState(null);
   const [module, setModule] = useState(null);
   const [size, setSize] = useState(null);
-  const [s1, setS1] = useState(null);
-  const [s2, setS2] = useState(null);
-  const [s3, setS3] = useState(null);
-  const [s4, setS4] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      message.error('You can only upload JPG/PNG file!');
+    }
+    return isJpgOrPng;
+  };
+
+  const onChangeImage = ( info ) => {
+    console.log(info)
+    if (info.file.status === 'uploading') {
+      setLoading(true)
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      getBase64(info.file.originFileObj, imageUrl => {
+        setImageUrl(imageUrl);
+        setLoading(false)
+        });
+    }
+  };
 
   const changeQuestionType = (event) => {
     setQuestionType(event.target.value);
@@ -41,12 +69,16 @@ export const CreateQuestion = () => {
   const handleChangeCondition = (event) => {
     setCondition(event.target.value);
   };
-  const handleChangeImageUrl = (event) => {
-    setImageUrl(event.target.value);
-  };
   const handleChangeUnits = (event) => {
     setUnits(event.target.value);
   };
+
+  const uploadButton = (
+    <div>
+      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
   return (
     <div>
@@ -129,14 +161,16 @@ export const CreateQuestion = () => {
                 label="image width"
                 variant="standard" />
 
-              <label htmlFor="contained-button-file">
-                <Input onChange={handleChangeImageUrl}
-                       style={{ width: '100%', margin: 2}}
-                       accept="image/*"
-                       id="contained-button-file"
-                       multiple type="file"
-                />
-              </label>
+              <Upload
+                name="avatar"
+                listType="picture-card"
+                className="avatar-uploader"
+                showUploadList={false}
+                beforeUpload={beforeUpload}
+                onChange={onChangeImage}
+              >
+                {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+              </Upload>
             </div>
           ) : questionType === 'correspondence' ? (
             <div>

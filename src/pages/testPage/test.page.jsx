@@ -122,7 +122,7 @@ export const TestPage = () => {
                   <CardContent>
                     <Typography>{
                       question.questionType === 'complete' ? (
-                        <div>{ question.condition}</div>
+                        <div>{ question.condition.replaceAll('%', '________________')}</div>
                       ) : question.questionType === 'correspondence' ? (
                         <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
                             <div style={{width: '40%'}}>{question.condition[0].split(',').map( (variable) => (<div>{variable + '  -'}</div>))}</div>

@@ -45,6 +45,7 @@ export const createUserAccountDocument = async (userAuth, additionalData) => {
   return userRef;
 }
 
+
 export const createQuestion = async ( grade, module, {...question }) => {
   if(!question && !grade && !module) return;
 
@@ -83,7 +84,7 @@ export const getQuestion = async ( grade, module) => {
     "module": module,
     "questions": itemsArr,
   }];
-}
+};
 
 firebase.initializeApp(config);
 
@@ -92,8 +93,18 @@ provider.setCustomParameters({ prompt: 'select_account'})
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
+// export const storage = firebase.storage();
+
 export const signInWithGoogle = async () => {
   await auth.signInWithPopup(provider);
 }
 
+export const logInWithEmailAndPassword = async (email, password) => {
+  try {
+    await auth.signInWithEmailAndPassword( email, password);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
 export default firebase;

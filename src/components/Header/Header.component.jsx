@@ -138,10 +138,10 @@ export const Header = ({ currentUser }) => {
         >
           <Box sx={modalstyle}>
             <Register />
-            <Button style={{color: 'white'}} onClick={ () => {
-              setOpen(!open);
-            }}>Sign up</Button>
-            <Button style={{color: 'blue'}} onClick={() => setOpen(!open)}>Finish</Button>
+            <Button
+            style={{backgroundColor: '#1e90ff', width: '100%',  color: 'white'}}
+            onClick={ () => setOpen(!open)}>Finish</Button>
+
           </Box>
         </Modal>
 
@@ -153,8 +153,9 @@ export const Header = ({ currentUser }) => {
         >
           <Box sx={modalstyle}>
             <SignIn />
-            <Button style={{color: 'white'}} onClick={() => setOpenSignIn(!openSignIn)}>Sign in</Button>
-            <Button style={{color: 'blue'}} onClick={() => setOpenSignIn(!openSignIn)}>Finish</Button>
+            <Button
+              style={{backgroundColor: '#1e90ff', width: '100%',  color: 'white'}}
+              onClick={() => setOpenSignIn(!openSignIn)}>Finish</Button>
           </Box>
         </Modal>
       </Container>

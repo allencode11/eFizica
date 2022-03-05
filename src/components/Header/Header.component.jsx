@@ -10,29 +10,30 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
 import {Register} from "../../pages/modalPages/register";
 import {Modal} from "@mui/material";
 import { auth } from '../../firebase/firebase.utils';
+import { SignIn } from '../../pages/modalPages/signin';
 
 const pages = [
-    {
-      name: 'Teste',
-      location: '/tests'
-    },
-    {
-      name: 'Laboratoare',
-      location: '/lab'
-    },
-    {
-        name: 'Tabele',
-        location: '/tables'
-    },
-  ];
+  {
+    name: 'Teste',
+    location: '/tests'
+  },
+  {
+    name: 'Laboratoare',
+    location: '/lab'
+  },
+  {
+    name: 'Tabele',
+    location: '/tables'
+  },
+];
 
 export const Header = ({ currentUser }) => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [open, setOpen] = useState(false);
+  const [openSignIn, setOpenSignIn] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -111,47 +112,64 @@ export const Header = ({ currentUser }) => {
                 <Link style={{ color: 'white' }} to={page.location}>{page.name}</Link>
               </Button>
             ))}
-              <div style={{position: "absolute", top: 15, right: 5}}>
-                  {
-                      currentUser ? (
-                          <div>
-                              <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Sign out</Button>
-                          </div>
-                              ) : (
-                          <div>
-                              <Button style={{color: 'white'}} onClick={signInWithGoogle}>Sign in</Button>
-                              <Button style={{color: 'white'}} onClick={ () => {
-                                setOpen(!open);
-                              }}>Sign up</Button>
-                          </div>
-                      )
-                  }
-              </div>
+            <div style={{position: "absolute", top: 15, right: 5}}>
+              {
+                currentUser ? (
+                  <div>
+                    <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Sign out</Button>
+                  </div>
+                ) : (
+                  <div>
+                    <Button style={{color: 'white'}} onClick={() => setOpenSignIn(!openSignIn)}>Sign in</Button>
+                    <Button style={{color: 'white'}} onClick={ () => {
+                      setOpen(!open);
+                    }}>Sign up</Button>
+                  </div>
+                )
+              }
+            </div>
           </Box>
         </Toolbar>
-      <Modal
+        <Modal
           open={open}
           onClose={() => setOpen(!open)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
-      >
+        >
           <Box sx={modalstyle}>
-              <Register />
+            <Register />
+            <Button style={{color: 'white'}} onClick={ () => {
+              setOpen(!open);
+            }}>Sign up</Button>
+            <Button style={{color: 'blue'}} onClick={() => setOpen(!open)}>Finish</Button>
           </Box>
-      </Modal>
+        </Modal>
+
+        <Modal
+          open={openSignIn}
+          onClose={() => setOpen(!open)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={modalstyle}>
+            <SignIn />
+            <Button style={{color: 'white'}} onClick={() => setOpenSignIn(!openSignIn)}>Sign in</Button>
+            <Button style={{color: 'blue'}} onClick={() => setOpenSignIn(!openSignIn)}>Finish</Button>
+          </Box>
+        </Modal>
       </Container>
     </AppBar>
   );
 }
 
 const modalstyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
 };

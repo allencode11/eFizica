@@ -15,34 +15,32 @@ const config = {
 export const createUserAccountDocument = async (userAuth, additionalData) => {
   if(!userAuth) return;
 
-  const { email, name, surname, institution, password } = userAuth;
+  try {
+    const { email } = userAuth;
 
-  const userRef = firestore.collection('users');
-  const q = userRef.where("email", "==", email);
+    const userRef = firestore.collection('users');
+    const q = userRef.where("email", "==", email);
 
-  const querySnapshot = await q.get();
+    const querySnapshot = await q.get();
 
-  if(querySnapshot.empty === false) {
-    return;
-  } else {
-    const createdAt = new Date();
-
-    try {
-          await userRef.add({
-            name,
-            email,
-            institution,
-            surname,
-            password,
-            createdAt,
-            ...additionalData
-          })
-        } catch (error) {
-          console.error(error);
-        }
+    if(querySnapshot.empty === false) {
+      return;
+    } else {
+      const createdAt = new Date();
+      try {
+        await userRef.add({
+          createdAt,
+          email,
+          ...additionalData
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    return userRef;
+  } catch (e) {
+    console.log(e);
   }
-
-  return userRef;
 }
 
 
@@ -101,6 +99,7 @@ export const signInWithGoogle = async () => {
 
 export const logInWithEmailAndPassword = async (email, password) => {
   try {
+    console.log(email, password)
     await auth.signInWithEmailAndPassword( email, password);
   } catch (err) {
     console.error(err);

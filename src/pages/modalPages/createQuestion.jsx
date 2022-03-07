@@ -29,6 +29,7 @@ export const CreateQuestion = () => {
   };
 
   const beforeUpload = (file) => {
+    setLoading(true)
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
       message.error('You can only upload JPG/PNG file!');
@@ -37,18 +38,10 @@ export const CreateQuestion = () => {
   };
 
   const onChangeImage = ( info ) => {
-    console.log(info)
-    if (info.file.status === 'uploading') {
-      setLoading(true)
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl => {
-        setImageUrl(imageUrl);
-        setLoading(false)
-        });
-    }
+    getBase64(info.file.originFileObj, imageUrl => {
+      setImageUrl(imageUrl);
+      setLoading(false)
+    });
   };
 
   const changeQuestionType = (event) => {
@@ -167,6 +160,7 @@ export const CreateQuestion = () => {
                 className="avatar-uploader"
                 showUploadList={false}
                 beforeUpload={beforeUpload}
+                customRequest={() => null}
                 onChange={onChangeImage}
               >
                 {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}

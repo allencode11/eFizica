@@ -29,6 +29,7 @@ export const CalendarPage = () => {
   };
 
   const beforeUpload = (file) => {
+    setLoading(true)
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
       message.error('You can only upload JPG/PNG file!');
@@ -37,18 +38,10 @@ export const CalendarPage = () => {
   };
 
   const onChangeImage = ( info ) => {
-    console.log(info)
-    if (info.file.status === 'uploading') {
-      setLoading(true)
-      return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
-      getBase64(info.file.originFileObj, imageUrl => {
-        setImage(imageUrl);
-        setLoading(false)
-      });
-    }
+    getBase64(info.file.originFileObj, imageUrl => {
+      setImage(imageUrl);
+      setLoading(false)
+    });
   };
 
   useEffect( () => {
@@ -66,13 +59,13 @@ export const CalendarPage = () => {
         : null
       }
       <Upload
-        name="avatar"
+        name="image"
         listType="picture-card"
         className="avatar-uploader"
         showUploadList={false}
         beforeUpload={beforeUpload}
+        customRequest={() => null}
         onChange={onChangeImage}
-        style={{width: '80%', display:'flex', flexDirection: 'column', justifyContent: 'space-between'}}
       >
         {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
       </Upload>

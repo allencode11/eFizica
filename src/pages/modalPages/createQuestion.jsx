@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState } from 'react';
-import { Input, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { createQuestion } from '../../firebase/firebase.utils';
@@ -155,7 +155,7 @@ export const CreateQuestion = () => {
                 variant="standard" />
 
               <Upload
-                name="avatar"
+                name="image"
                 listType="picture-card"
                 className="avatar-uploader"
                 showUploadList={false}

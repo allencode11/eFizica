@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { auth, createUserAccountDocument } from './firebase/firebase.utils';
@@ -12,6 +11,7 @@ import { PrintedTest } from './pages/printedTestPage/printedTest';
 import { CalendarPage } from './pages/calendar/Calendar.page';
 import { PlanPage } from './pages/plan/Plan.page';
 import { LabPage } from './pages/laboratory/Lab.page';
+import { TablesPage } from './pages/tables/tables.page';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
@@ -28,15 +28,16 @@ function App() {
   return (
     <>
       {
-        currentUrl === '/printedTest' ? null : <Header currentUser={currentUser}/>
+        currentUrl === 'eFizica/printedTest' ? null : <Header currentUser={currentUser}/>
       }
       <Routes>
         <Route path="/eFizica" exact element={<HomePage />} />
-        <Route path="/tests" element={<TestPage />} />
-        <Route path="/lab" element={<LabPage />} />
-        <Route path="/printedTest" element={<PrintedTest />} />
-        <Route path="/plan" element={<PlanPage />} />
-        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/eFizica/tests" element={<TestPage />} />
+        <Route path="/eFizica/lab" element={<LabPage />} />
+        <Route path="/eFizica/printedTest" element={<PrintedTest />} />
+        <Route path="/eFizica/plan" element={<PlanPage />} />
+        <Route path="/eFizica/calendar" element={<CalendarPage />} />
+        <Route path="/eFizica/tables" element={<TablesPage />} />
       </Routes>
     </>
   );

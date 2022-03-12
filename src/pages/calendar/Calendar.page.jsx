@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { createCalendar, getCalendar } from '../../firebase/firebase.calendar.data';
 import { message, Upload } from 'antd';
+import { Card, Modal } from '@mui/material';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Button from '@mui/material/Button';
 
@@ -8,11 +9,12 @@ export const CalendarPage = () => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [calendars, setCalendars] = useState(null);
+  const [element, setElement] = useState(null);
+  const [open, setOpen] = useState(false);
 
   const fetchMyAPI = useCallback(async () => {
     let calendars = await getCalendar();
     setCalendars(calendars);
-
   }, []);
 
   const uploadButton = (
@@ -52,9 +54,16 @@ export const CalendarPage = () => {
     <div style={{ paddingTop: '2%', paddingLeft: '2%', justifyContent: 'center'}}>
       { calendars ?
         calendars.image.map(calendar => (
-          <div>
-            <img style={{width: '98%', margin: 5, borderRadius: 15}} src={calendar.file} />
-          </div>
+          <Card
+            style={{width: '98%', marginTop: 20}}
+            onClick={() => {
+              setOpen(true);
+              setElement(calendar);
+             console.log(element);
+            }}
+          >
+            <img style={{width: '98%', borderRadius: 15}} src={calendar.file} />
+          </Card>
         ))
         : null
       }
@@ -72,8 +81,35 @@ export const CalendarPage = () => {
       {image ? <Button onClick={ async () => {
         await createCalendar(image);
       }}>Add</Button> : null}
+      <Modal
+        open={open}
+        onClose={() => setOpen(!open)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        { element &&
+          <img
+            src={element.file}
+            style={modalstyle}
+            alt='{item.file.title}'
+            loading="lazy"
+          />
+        }
+      </Modal>
     </div>
 
   )
+};
 
+const modalstyle = {
+  display: 'block',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  modalStyle: 'auto',
+  width: 800,
+  paddingTop: 10,
+  paddingBottom: 10,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
 };

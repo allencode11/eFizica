@@ -138,7 +138,10 @@ export const TestPage = () => {
               margin: '2rem 0',
               color: '#1e90ff'
             }}>
-            {tests[0].module}
+            {
+              tests[0].module === 'Lucrul mecanic, puterea si energia mecanica'
+              ? 'Lucrul mecanic, puterea și energia mecanică'
+              : tests[0].mpdule}
           </Typography>
         }
 

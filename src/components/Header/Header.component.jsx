@@ -18,15 +18,15 @@ import { SignIn } from '../../pages/modalPages/signin';
 const pages = [
   {
     name: 'Teste',
-    location: '/tests'
+    location: '/eFizica/tests'
   },
   {
     name: 'Laboratoare',
-    location: '/lab'
+    location: '/eFizica/lab'
   },
   {
     name: 'Tabele',
-    location: '/tables'
+    location: '/eFizica/tables'
   },
 ];
 

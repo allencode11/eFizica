@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Input, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { auth, createUserAccountDocument, logInWithEmailAndPassword } from '../../firebase/firebase.utils';
+import { auth } from '../../firebase/firebase.utils';
 
-export const SignIn = () => {
+export const SignIn = (changeState) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -38,9 +38,14 @@ export const SignIn = () => {
             variant="standard"/>
 
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
-          await auth.signInWithEmailAndPassword(email, password);
+          try {
+            await auth.signInWithEmailAndPassword(email, password);
+          } catch (e) {
+            alert('Parola sau emailul nu este valid!')
+          }
+          // changestate('false');
         }}>
-          Log In
+          Conectează-mă
         </Button>
       </FormControl>
     </div>

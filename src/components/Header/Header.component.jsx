@@ -21,12 +21,20 @@ const pages = [
     location: '/eFizica/tests'
   },
   {
-    name: 'Laboratoare',
+    name: 'Lucrări de laborator',
     location: '/eFizica/lab'
   },
   {
     name: 'Tabele',
     location: '/eFizica/tables'
+  },
+  {
+    name: 'Calendar școlar',
+    location: '/eFizica/calendar'
+  },
+  {
+    name: 'Plănuire',
+    location: '/eFizica/plan'
   },
 ];
 
@@ -37,6 +45,10 @@ export const Header = ({ currentUser }) => {
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
+  };
+
+  const handleOpenSignIn= (value) => {
+    setOpenSignIn(value);
   };
 
   const handleCloseNavMenu = () => {
@@ -116,14 +128,20 @@ export const Header = ({ currentUser }) => {
               {
                 currentUser ? (
                   <div>
-                    <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Sign out</Button>
+                    <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Deconectează-mă</Button>
                   </div>
                 ) : (
                   <div>
-                    <Button style={{color: 'white'}} onClick={() => setOpenSignIn(!openSignIn)}>Sign in</Button>
+                    <Button
+                      changestate={handleOpenSignIn}
+                      style={{color: 'white'}}
+                      onClick={() => {
+                        handleOpenSignIn(true);
+                      }}>Conectează-mă</Button>
+
                     <Button style={{color: 'white'}} onClick={ () => {
                       setOpen(!open);
-                    }}>Sign up</Button>
+                    }}>Înregistrare</Button>
                   </div>
                 )
               }
@@ -147,7 +165,7 @@ export const Header = ({ currentUser }) => {
 
         <Modal
           open={openSignIn}
-          onClose={() => setOpen(!open)}
+          onClose={() => setOpenSignIn(!openSignIn)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { auth, createUserAccountDocument } from './firebase/firebase.utils';
 
 import './App.css';
@@ -12,6 +12,7 @@ import { CalendarPage } from './pages/calendar/Calendar.page';
 import { PlanPage } from './pages/plan/Plan.page';
 import { LabPage } from './pages/laboratory/Lab.page';
 import { TablesPage } from './pages/tables/tables.page';
+import { SHomePage } from './pages/simplyHome/simplyHome';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
@@ -20,7 +21,6 @@ function App() {
 
   useEffect( () => {
     auth.onAuthStateChanged( async user => {
-      // await createUserAccountDocument(user);
       setCurrentUser(user);
     })
   }, [currentUser]);
@@ -30,15 +30,29 @@ function App() {
       {
         currentUrl === 'eFizica/printedTest' ? null : <Header currentUser={currentUser}/>
       }
-      <Routes>
-        <Route path="/eFizica" exact element={<HomePage />} />
-        <Route path="/eFizica/tests" element={<TestPage />} />
-        <Route path="/eFizica/lab" element={<LabPage />} />
-        <Route path="/eFizica/printedTest" element={<PrintedTest />} />
-        <Route path="/eFizica/plan" element={<PlanPage />} />
-        <Route path="/eFizica/calendar" element={<CalendarPage />} />
-        <Route path="/eFizica/tables" element={<TablesPage />} />
-      </Routes>
+        {
+          currentUser ? (
+            <Routes>
+              <Route path="/eFizica" element={<HomePage />}/>
+              <Route path="/eFizica/tests" element={<TestPage />} />
+              <Route path="/eFizica/lab" element={<LabPage />} />
+              <Route path="/eFizica/printedTest" element={<PrintedTest />} />
+              <Route path="/eFizica/plan" element={<PlanPage />} />
+              <Route path="/eFizica/calendar" element={<CalendarPage />} />
+              <Route path="/eFizica/tables" element={<TablesPage />} />
+            </Routes>
+          ) :  (
+            <Routes>
+              <Route path="/eFizica" element={<SHomePage />}/>
+              <Route path="/eFizica/tests" element={<SHomePage />} />
+              <Route path="/eFizica/lab" element={<SHomePage />} />
+              <Route path="/eFizica/printedTest" element={<SHomePage />} />
+              <Route path="/eFizica/plan" element={<SHomePage />} />
+              <Route path="/eFizica/calendar" element={<SHomePage />} />
+              <Route path="/eFizica/tables" element={<SHomePage />} />
+            </Routes>
+          )
+        }
     </>
   );
 }

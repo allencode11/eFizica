@@ -1,7 +1,6 @@
 import Container from '@mui/material/Container';
 import { Card, CardActions, CardContent, CardMedia, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
 const cards = [
@@ -45,12 +44,13 @@ const cards = [
 export const HomePage = () => {
   const navigate = useNavigate();
   return (
-    <Container sx={{ py: 10}} maxWidth="md">
-      <Grid container spacing={5}>
+    <Container sx={{marginTop: 10}} >
+      <Grid container spacing={2}>
         {cards.map((card) => (
-          <Grid item key={card.id} xs={12} sm={6} md={4}>
+          <Grid item key={card.id} xs={12} sm={3} >
             <Card
-              sx={{ display: 'flex', flexDirection: 'column' }}
+              sx={{ display: 'flex', flexDirection: 'column', cursor: 'pointer' }}
+              onClick={() => navigate(card.location)}
             >
               <CardMedia
                 component="img"
@@ -58,16 +58,13 @@ export const HomePage = () => {
                 alt="random"
               />
               <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h5" component="h2">
+                <Typography gutterBottom variant="h5" component="h2" sx={{textAlign: 'center'}}>
                   { card.heading }
                 </Typography>
-                <Typography>
+                <Typography sx={{color: '#1e90ff', textAlign: 'center'}}>
                   { card.content }
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button size="small" sx={{color: '#1e90ff'}} onClick={() => navigate(card.location)}>Acceseaza</Button>
-              </CardActions>
             </Card>
           </Grid>
         ))}

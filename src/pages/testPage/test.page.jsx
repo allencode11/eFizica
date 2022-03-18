@@ -1,7 +1,7 @@
 import { Container, Typography, Button, Card, CardContent, Modal } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
-import { CreateQuestion} from '../modalPages/createQuestion';
+import { CreateQuestion } from '../modalPages/createQuestion';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,6 +11,7 @@ import { CorrespondenceItem } from '../../components/Items/Correspondence.compon
 import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
+import { PrintedTest } from '../printedTestPage/printedTest';
 
 const selectData = [
   {
@@ -42,28 +43,29 @@ const selectData = [
 ]
 
 export const TestPage = () => {
-  const [tests, setTests] = useState([]);
+  const [tests, setTests] = useState({});
   const [open, setOpen] = useState(false);
+  const [openPrinted, setOpenPrinted] = useState(false);
   const [grade, setGrade] = useState('7');
   const [module, setModule] = useState('Statica fluidelor');
   const [position, setPosition] = useState(0);
-
   let print = [];
 
-  const addToPrint = async (printTest, question) => {
-    const found = printTest.find(element => element.condition === question.condition);
-    if(found) {
+  const foundItem = (Arr, q) => {
+    return Arr.find(element => element.question.condition === q.condition);
+  }
+  const addToPrint = (printTest, question) => {
+    if(foundItem(printTest, question)) {
       for( let i = 0; i < printTest.length; i++){
-        if ( printTest[i].condition === question.condition) {
+        if ( printTest[i].question.condition === question.condition ) {
           printTest.splice(i, 1);
           i--;
         }
       }
     } else {
-      printTest.push(question);
+      printTest.push({question, display: true});
     }
   }
-
   const handleGrade = async (event) => {
     setGrade(event.target.value);
   };
@@ -72,9 +74,14 @@ export const TestPage = () => {
   }
 
   const fetchMyAPI = useCallback(async () => {
-    let questions = await getQuestion(grade, module);
-    setTests(questions);
+    const questions = await getQuestion(grade, module);
 
+    const tep = []
+    const temp = [...questions[0].questions]
+    temp.forEach( question => tep.push({question, display: false}));
+    const data = { discipline:questions[0].discipline, grade: questions[0].grade, module: questions[0].module, questions: tep};
+    setTests(data);
+    console.log('tests:', tests);
   }, [grade, module]);
 
   useEffect( () => {
@@ -90,12 +97,12 @@ export const TestPage = () => {
         justifyContent: 'space-between',
       }}>
         <div style={{width: 300}}>
-          <InputLabel id="demo-simple-select-label">Module</InputLabel>
+          <InputLabel id="demo-simple-select-label">Modulul</InputLabel>
           <Select style={{width: '100%'}}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={module}
-                  label="Grade"
+                  label="Modulul"
                   onChange={handleModule}
           >
             <MenuItem value={'Mișcarea și repausul'}>Mișcarea și repausul</MenuItem>
@@ -107,12 +114,12 @@ export const TestPage = () => {
         </div>
 
         <div style={{width: 300}}>
-          <InputLabel id="demo-simple-select-label">Grade</InputLabel>
+          <InputLabel id="demo-simple-select-label">Clasa</InputLabel>
           <Select style={{width: '100%'}}
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={grade}
-                  label="Grade"
+                  label="Clasa"
                   onChange={handleGrade}
           >
             <MenuItem value={6}>6</MenuItem>
@@ -135,74 +142,85 @@ export const TestPage = () => {
           <Typography
             style={{ fontWeight: '700',
               fontSize: '2rem',
-              margin: '2rem 0',
+              margin: '2rem 0 0 0',
               color: '#1e90ff'
             }}>
             {
               tests[0].module === 'Lucrul mecanic, puterea si energia mecanica'
               ? 'Lucrul mecanic, puterea și energia mecanică'
-              : tests[0].mpdule}
+              : tests[0].module
+            }
           </Typography>
         }
-
-
       </div>
+
       <div>
+        <div>
+          <Typography>
+            Selecteaza {selectData[position].items} itemi din lista de mai jos
+          </Typography>
+
           <div>
-            <Typography>
-              Selecteaza {selectData[position].items} itemi
-            </Typography>
-            <div>
-              {
-                tests.map((test) => {
-                  return (
-                    <div>
-                      {test.questions
-                        .filter(item => item.questionType === selectData[position].section)
-                        .map((question) => (
-                          <Card
-                            onClick={async () => {
-                              await addToPrint(print, question);
-                              console.log(print)
-                              console.log(...print)
-                            }}
-                            style={{
-                              cursor: 'pointer',
-                              margin: '20px 0',
-                              border: '1px solid #ccc',
-                            }}>
-                            <CardContent>
-                              <Typography>
-                                {/*{ () => (`${selectData[position].component + 'Item'} item={question}/`)}*/}
-                                {
-                                question.questionType === 'complete' ? (
-                                  <CompleteItem item={question}/>
-                                ) : question.questionType === 'correspondence' ? (
-                                  <CorrespondenceItem item={question}/>
-                                ) : question.questionType === 'problem1' ? (
-                                  <FirstProblemItem item={question}/>
-                                ) : question.questionType === 'problem2' ? (
-                                  <SecondProblemItem item={question}/>
-                                ) : question.questionType === 'boolean' ? (
-                                  <BooleanItem item={question}/>
-                                ) : <div>Err</div>
-                              }
-                              </Typography>
-                            </CardContent>
-                          </Card>
-                        ))}
-                    </div>
-                  );
-                })
-              }
-            </div>
-            {/*{*/}
-            {/*  print.length === 3 && */}
-            {/*  <Button onClick={ () => { setPosition(position + 1)}}>Next</Button>*/}
-            {/*}*/}
-            <Button onClick={ () => { setPosition(position + 1)}}>Next</Button>
+            {
+              tests.questions &&
+              tests.questions
+              .filter(item => item.question.questionType === selectData[position].section)
+              .map((element) => (
+                <Card
+                  onClick={ () => {
+                      addToPrint(print, element.question);
+                      element.display = !element.display;
+                      alert('Item adaugat');
+                      console.log('tests:',tests);
+                      console.log('print:',print);
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    margin: '20px 0 0 0',
+                    border: element.display ? '1px solid #1e90ff' : '1px solid #ccc',
+                  }}>
+                  <CardContent style={{display: 'flex', flexDirection: 'row'}}>
+                    <Typography style={{width: '97%'}}>
+                      {
+                      element.question.questionType === 'complete' ? (
+                        <CompleteItem item={element.question}/>
+                      ) : element.question.questionType === 'correspondence' ? (
+                        <CorrespondenceItem item={element.question}/>
+                      ) : element.question.questionType === 'problem1' ? (
+                        <FirstProblemItem item={element.question}/>
+                      ) : element.question.questionType === 'problem2' ? (
+                        <SecondProblemItem item={element.question}/>
+                      ) : element.question.questionType === 'boolean' ? (
+                        <BooleanItem item={element.question}/>
+                      ) : <div>Err</div>
+                    }
+                    </Typography>
+                    {
+                      element.display ? <img
+                        src={require('../../assets/done.png')}
+                        style={{width: '3%', height: '4%', position: 'relative', left: 12, top: -7}}/> : null
+                    }
+                  </CardContent>
+                </Card>
+              ))}
           </div>
+          </div>
+
+        {
+          position < selectData.length - 1 ?
+            <Button onClick={ () => {
+              if (position < selectData.length - 1)
+                setPosition(position + 1)
+            }}>Next</Button> :
+            <Button
+              style={{ color: '#1e90ff' }}
+              onClick={() => { setOpenPrinted(!openPrinted); console.log(print); }}>
+              Genereaza
+            </Button>
+
+        }
       </div>
+
       <Modal
         open={open}
         onClose={() => setOpen(!open)}
@@ -216,6 +234,18 @@ export const TestPage = () => {
           </Button>
         </Box>
       </Modal>
+
+      <Modal
+        open={openPrinted}
+        onClose={() => setOpenPrinted(!openPrinted)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <PrintedTest discipline={tests.discipline} module={tests.module} grade={tests.grade} tests={print}/>
+        </Box>
+      </Modal>
+
     </Container>
   )
 }
@@ -225,7 +255,6 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,

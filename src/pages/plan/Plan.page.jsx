@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { createPlan, getPlan } from '../../firebase/firebase.plan.data';
 import { message, Upload } from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Button from '@mui/material/Button';
 import { Document, Page, pdfjs } from "react-pdf";
 import samplePDF from './test.pdf';
-import { storage } from '../../firebase/firebase.utils';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -23,8 +21,6 @@ export const PlanPage = () => {
       return;
 
     setPdfFile(file);
-    // storage.ref(`/physics/${file.name}`).put(file)
-    //   .on("state_changed" , alert("success") , alert);
   };
 
   const uploadButton = (

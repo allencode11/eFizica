@@ -1,23 +1,27 @@
 import { Container, Typography } from '@mui/material';
-import { useState } from 'react';
-import { TestData } from '../testPage/data';
+import React, { useState } from 'react';
 import { Conditions } from './conditions';
+import { CompleteItem } from '../../components/Items/Complete.component';
+import { CorrespondenceItem } from '../../components/Items/Correspondence.component';
+import { FirstProblemItem } from '../../components/Items/Problem1.component';
+import { SecondProblemItem } from '../../components/Items/Problem2.component';
+import { BooleanItem } from '../../components/Items/Boolean.component';
 
-export const PrintedTest = ( ) => {
-  const [test, setTest] = useState(TestData);
+export const PrintedTest = ( discipline, grade, module, tests ) => {
   const [conditions, setConditions] = useState(Conditions);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" onClick={() => { console.log('props', tests) }}>
+       { /*Datele generale despre test*/ }
+
       <div style={{
         margin: '10px 0',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <Typography> Disciplina: {test[0].discipline}</Typography>
-        <Typography> Data: ____________</Typography>
-        <Typography> Clasa a {test[0].grade}-a</Typography>
+        <Typography> Disciplina: { discipline } </Typography>
+        <Typography> Clasa: { grade } </Typography>
       </div>
       <div style={{
         margin: '10px 0',
@@ -48,9 +52,10 @@ export const PrintedTest = ( ) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Typography> Unitatea: {test[0].module}</Typography>
+        <Typography> Unitatea: { module } </Typography>
       </div>
 
+      { /*Crearea headerului tabelului*/ }
       <div style={{
         border: '2px solid black',
         display: 'flex',
@@ -59,12 +64,12 @@ export const PrintedTest = ( ) => {
         textAlign: 'center',
       }}>
         <Typography sx={{
-          width: 15,
+          width: 51,
           textAlign: 'center',
           padding: 1.5,
-          borderRight: '2px solid black',
           paddingTop: 0.5,
           paddingBottom: 0.5,
+          borderRight: '2px solid black'
         }}>Nr.</Typography>
         <Typography sx={{
           width: 727,
@@ -82,8 +87,10 @@ export const PrintedTest = ( ) => {
           borderLeft: '2px solid black'
         }}>Scor</Typography>
       </div>
+
       {
-        test[0].questions.map( (question, index) => {
+        tests.questions &&
+        tests.map((question, index) => {
           return (
             <div style={{
               display: 'flex',
@@ -113,42 +120,18 @@ export const PrintedTest = ( ) => {
                     ))}
                 </div>
                 {
-                question.questionType === 'complete' ? (
-                  <div>
-                    { question.condition.map( (element) => (<div>{element.replaceAll('%', '________________ ')}</div>))}</div>
-                ) : question.questionType === 'correspondence' ? (
-                  <div style={{display: 'flex', flexDirection: 'row', textAlign: 'center', paddingLeft: 150}}>
-                    <div style={{width: '40%'}}>{question.condition[0].split(',').map( (variable) => (<div>{variable + '  -'}</div>))}</div>
-                    <div style={{width: '40%'}}>{question.condition[1].split(',').map( (unit) => (<div>{'-  ' + unit}</div>))}</div>
-                  </div>
-                ) : question.questionType === 'problem1' ? (
-                  <div>
-                    <div>{question.condition[0]}</div>
-                    {[
-                      ...Array(question.condition[1]),
-                    ].map((value, index) => (
-                      <div style={{height: 25}} id={index + 1} key={index}/>
-                    ))
-                    }
-                  </div>
-                ) : question.questionType === 'problem2' ? (
-                  <div style={{flexDirection: 'row'}}>
-                    <div>{question.condition}</div>
-                    <img style={{width: `${question.size}`, height: 'auto'}} src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.VSsB5gjCBI_3QFkKTlzI3gHaDt%26pid%3DApi&f=1" />
-                  </div>
-                ) : question.questionType === 'boolean' ? (
-                  <div>
-                    {
-                      question.condition.map( element => (
-                        <div style={{display: 'flex', flexDirection: 'row'}}>
-                          <div style={{width: '90%'}}>{element}</div>
-                          <div style={{width: '10%', textAlign: 'center'}}> A  F </div>
-                        </div>
-                      ))
-                    }
-                  </div>
-                ) : <div>Err</div>
-              }
+                  question.questionType === 'complete' ? (
+                    <CompleteItem item={question}/>
+                  ) : question.questionType === 'correspondence' ? (
+                    <CorrespondenceItem item={question}/>
+                  ) : question.questionType === 'problem1' ? (
+                    <FirstProblemItem item={question}/>
+                  ) : question.questionType === 'problem2' ? (
+                    <SecondProblemItem item={question}/>
+                  ) : question.questionType === 'boolean' ? (
+                    <BooleanItem item={question}/>
+                  ) : <div>Err</div>
+                }
               </Typography>
               <Typography sx={{
                 width: 30,
@@ -168,13 +151,8 @@ export const PrintedTest = ( ) => {
         })
       }
       <Typography sx={{color: 'grey', fontSize: 10, margin: 2, textAlign: 'center'}}>
-        Enache Alic  :   https://allencode11.github.io/eFizica.io/
+        Enache Alic  :   https://allencode11.github.io/eFizica
       </Typography>
     </Container>
   )
-}
-
-const cell = {
-  border: '2px solid black',
-  width: 150,
 }

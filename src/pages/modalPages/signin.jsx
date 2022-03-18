@@ -43,7 +43,6 @@ export const SignIn = (changeState) => {
           } catch (e) {
             alert('Parola sau emailul nu este valid!')
           }
-          // changestate('false');
         }}>
           Conectează-mă
         </Button>

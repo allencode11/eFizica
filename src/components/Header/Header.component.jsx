@@ -133,7 +133,6 @@ export const Header = ({ currentUser }) => {
                 ) : (
                   <div>
                     <Button
-                      changestate={handleOpenSignIn}
                       style={{color: 'white'}}
                       onClick={() => {
                         handleOpenSignIn(true);

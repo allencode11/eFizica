@@ -12,6 +12,7 @@ import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
 import { PrintedTest } from '../printedTestPage/printedTest';
+import { v4 as uuid } from 'uuid';
 
 const selectData = [
   {
@@ -49,7 +50,7 @@ export const TestPage = () => {
   const [grade, setGrade] = useState('7');
   const [module, setModule] = useState('Statica fluidelor');
   const [position, setPosition] = useState(0);
-  let print = [];
+  const [print, setPrint] = useState([]);
 
   const foundItem = (Arr, q) => {
     return Arr.find(element => element.question.condition === q.condition);
@@ -78,7 +79,7 @@ export const TestPage = () => {
 
     const tep = []
     const temp = [...questions[0].questions]
-    temp.forEach( question => tep.push({question, display: false}));
+    temp.forEach( question => tep.push({question, display: false, uuid: uuid()}));
     const data = { discipline:questions[0].discipline, grade: questions[0].grade, module: questions[0].module, questions: tep};
     setTests(data);
     console.log('tests:', tests);
@@ -167,6 +168,7 @@ export const TestPage = () => {
               .filter(item => item.question.questionType === selectData[position].section)
               .map((element) => (
                 <Card
+                  key={element.uuid}
                   onClick={ () => {
                       addToPrint(print, element.question);
                       element.display = !element.display;

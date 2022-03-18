@@ -55,11 +55,10 @@ export const CalendarPage = () => {
       { calendars ?
         calendars.image.map(calendar => (
           <Card
-            style={{width: '98%', marginTop: 20}}
+            style={{width: '98%', marginTop: 20, cursor: 'pointer'}}
             onClick={() => {
-              setOpen(true);
+              setOpen(!open);
               setElement(calendar);
-             console.log(element);
             }}
           >
             <img style={{width: '98%', borderRadius: 15}} src={calendar.file} />
@@ -80,7 +79,7 @@ export const CalendarPage = () => {
       </Upload>
       {image ? <Button onClick={ async () => {
         await createCalendar(image);
-      }}>Add</Button> : null}
+      }}>Adaugare</Button> : null}
       <Modal
         open={open}
         onClose={() => setOpen(!open)}

@@ -62,7 +62,7 @@ export const TablesPage = () => {
           tables ? tables.image.map((item) => (
           <Grid item xs={3}>
             <Card
-              style={{ width: '97%',marginTop: 10 }}
+              style={{ width: '97%',marginTop: 10, cursor: 'pointer', marginBottom: 10 }}
               onClick={() => {
                 setOpen(true);
                 setElement(item);
@@ -71,11 +71,11 @@ export const TablesPage = () => {
               <img
                 src={item.file.imageUrl}
                 style={{ width: '94%', height: 405, margin: 15, borderRadius: 15}}
-                alt={item.file.title}
+                alt={item.file.title.substring(0, item.file.title.length-3)}
                 loading="lazy"
               />
-              <Typography style={{ color: '#1e90ff', textAlign: 'center', marginBottom: 10}}>
-                { item.file.title }
+              <Typography style={{ color: '#1e90ff', textAlign: 'center', marginBottom: 10, fontSize: 14}}>
+                { item.file.title.substring(0, item.file.title.length-4) }
               </Typography>
             </Card>
           </Grid>
@@ -121,7 +121,8 @@ const modalstyle = {
   marginLeft: 'auto',
   marginRight: 'auto',
   modalStyle: 'auto',
-  width: 800,
+  width: 'auto',
+  maxHeight: 750,
   paddingTop: 10,
   paddingBottom: 10,
   bgcolor: 'background.paper',

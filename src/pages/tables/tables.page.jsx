@@ -122,7 +122,7 @@ const modalstyle = {
   marginRight: 'auto',
   modalStyle: 'auto',
   width: 'auto',
-  maxHeight: 750,
+  maxHeight: '90%',
   paddingTop: 10,
   paddingBottom: 10,
   bgcolor: 'background.paper',

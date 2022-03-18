@@ -158,7 +158,7 @@ export const TestPage = () => {
       <div>
         <div>
           <Typography>
-            Selecteaza {selectData[position].items} itemi din lista de mai jos
+            Din lista de mai jos selecteaza {selectData[position].items} itemi!
           </Typography>
 
           <div>

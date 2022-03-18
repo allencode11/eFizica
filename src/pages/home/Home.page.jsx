@@ -36,7 +36,7 @@ const cards = [
     id: 5,
     image: require('../../assets/proiectare.png'),
     heading: 'Plănuire',
-    content: 'Vizualizare plănuirea calendaristică',
+    content: 'Vizualizare și descare plănuire calendaristică',
     location: '/eFizica/plan',
   }
 ]
@@ -44,10 +44,10 @@ const cards = [
 export const HomePage = () => {
   const navigate = useNavigate();
   return (
-    <Container sx={{marginTop: 10}} >
+    <Container sx={{margin: '0.5%', marginTop: 10, justifyContent: 'center'}} maxWidth={'xl'}>
       <Grid container spacing={2}>
         {cards.map((card) => (
-          <Grid item key={card.id} xs={12} sm={3} >
+          <Grid item key={card.id} sm={2.4} >
             <Card
               sx={{ display: 'flex', flexDirection: 'column', cursor: 'pointer' }}
               onClick={() => navigate(card.location)}
@@ -61,7 +61,7 @@ export const HomePage = () => {
                 <Typography gutterBottom variant="h5" component="h2" sx={{textAlign: 'center'}}>
                   { card.heading }
                 </Typography>
-                <Typography sx={{color: '#1e90ff', textAlign: 'center'}}>
+                <Typography sx={{color: '#1e90ff', textAlign: 'center', fontSize: 15}}>
                   { card.content }
                 </Typography>
               </CardContent>

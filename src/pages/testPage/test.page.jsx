@@ -175,9 +175,10 @@ export const TestPage = () => {
                   key={element.uuid}
                   onClick={ () => {
                       addToPrint(print, element);
-                      console.log('selected:', print)
-                      element.display = !element.display;
-                      alert('Item adaugat');
+                      const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
+                      const newTests = tests;
+                      newTests.questions[index].display = !element.display;
+                      setTests({ ...newTests });
                   }}
                   style={{
                     cursor: 'pointer',

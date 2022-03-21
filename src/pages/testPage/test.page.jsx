@@ -13,6 +13,7 @@ import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
 import { PrintedTest } from '../printedTestPage/printedTest';
 import { v4 as uuid } from 'uuid';
+import { Link } from 'react-router-dom';
 
 const selectData = [
   {
@@ -50,31 +51,29 @@ export const TestPage = () => {
   const [grade, setGrade] = useState('7');
   const [module, setModule] = useState('Statica fluidelor');
   const [position, setPosition] = useState(0);
-  const [print, setPrint] = useState([]);
+  const [print, setPrint] = useState({});
 
-  const foundItem = (Arr, q) => {
-    let found = -1;
-    for(let i = 0; i < Arr.length; i++) {
-      if(Arr[i].question.uuid ==  q.uuid)
-        found = i;
+  const addToPrint = (question) => {
+    if (!(question.question.questionType in print)) {
+      print[question.question.questionType] = [];
     }
-    return found;
-  }
+    const index = print[question.question.questionType].findIndex((el) => el.uuid === question.uuid);
 
-  const addToPrint = (printTest, question) => {
-    console.log(foundItem(printTest, question))
-    if ( foundItem(printTest, question) !== -1 ) {
-      printTest.splice(foundItem(printTest, question), 1);
+    if (index >= 0) {
+      print[question.question.questionType].splice(index, 1);
     } else {
-      printTest.push({question: question.question, uuid: question.uuid });
-      console.log(printTest)
-      console.log("question:", question.question)
-
+      print[question.question.questionType].push({
+        ...question
+      });
+      setPrint({ ...print });
     }
+
+    console.log(print);
   }
   const handleGrade = async (event) => {
     setGrade(event.target.value);
-  };
+  }
+
   const handleModule = async (event) => {
     setModule(event.target.value);
   }
@@ -137,7 +136,7 @@ export const TestPage = () => {
           </Select>
         </div>
 
-        <Button onClick={() => setOpen(!open)} variant="contained">
+        <Button style={{backgroundColor: '#1e90ff'}} onClick={() => setOpen(!open)} variant="contained">
           Creaza intrebare
         </Button>
       </div>
@@ -174,7 +173,7 @@ export const TestPage = () => {
                 <Card
                   key={element.uuid}
                   onClick={ () => {
-                      addToPrint(print, element);
+                      addToPrint(element);
                       const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
                       const newTests = tests;
                       newTests.questions[index].display = !element.display;
@@ -188,18 +187,20 @@ export const TestPage = () => {
                   <CardContent style={{display: 'flex', flexDirection: 'row'}}>
                     <Typography style={{width: '97%'}}>
                       {
-                      element.question.questionType === 'complete' ? (
-                        <CompleteItem item={element.question}/>
-                      ) : element.question.questionType === 'correspondence' ? (
-                        <CorrespondenceItem item={element.question}/>
-                      ) : element.question.questionType === 'problem1' ? (
-                        <FirstProblemItem item={element.question}/>
-                      ) : element.question.questionType === 'problem2' ? (
-                        <SecondProblemItem item={element.question}/>
-                      ) : element.question.questionType === 'boolean' ? (
-                        <BooleanItem item={element.question}/>
-                      ) : <div>Err</div>
-                    }
+                        element.question.questionType === 'complete' ? (
+                          <CompleteItem item={element.question}/>
+                        ) : element.question.questionType === 'correspondence' ? (
+                          <CorrespondenceItem onClick={(text) => {
+                            element.question.condition[1] = text;
+                          }} title={element.question.condition[0]} variants={element.question.condition[1].split(',')}/>
+                        ) : element.question.questionType === 'problem1' ? (
+                          <FirstProblemItem item={element.question}/>
+                        ) : element.question.questionType === 'problem2' ? (
+                          <SecondProblemItem item={element.question}/>
+                        ) : element.question.questionType === 'boolean' ? (
+                          <BooleanItem item={element.question}/>
+                        ) : null
+                      }
                     </Typography>
                     {
                       element.display ? <img
@@ -230,18 +231,32 @@ export const TestPage = () => {
             }}>
               Urmatorul
             </Button> :
-            <Button
+            <Link
               style={{
                 backgroundColor: '#1e90ff',
                 color:'white',
                 marginTop: 10,
                 marginBottom: 10,
-                height: 30,
+                height: 40,
+                padding: 10,
+                borderRadius: 5,
+                fontWeight: 500,
                 position:'relative',
                 left: '87%'}}
-              onClick={() => { setOpenPrinted(!openPrinted); }}>
-              Genereaza
-            </Button>
+              discipline={tests.discipline}
+              params={{
+                print,
+              }}
+              module={tests.module}
+              grade={tests.grade}
+              tests={print}
+              onClick={() => {
+                localStorage.removeItem("selected");
+                localStorage.setItem("selected", JSON.stringify(print));
+              }}
+              to={{
+                pathname: '/eFizica/printedTest',
+              }}>GENEREAZA</Link>
 
         }
       </div>

@@ -50,6 +50,9 @@ export const Header = ({ currentUser }) => {
   const handleOpenSignIn= (value) => {
     setOpenSignIn(value);
   };
+  const handleOpen= (value) => {
+    setOpen(value);
+  };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -132,15 +135,9 @@ export const Header = ({ currentUser }) => {
                   </div>
                 ) : (
                   <div>
-                    <Button
-                      style={{color: 'white'}}
-                      onClick={() => {
-                        handleOpenSignIn(true);
-                      }}>Conectează-mă</Button>
+                    <Button style={{color: 'white'}} onClick={() => {handleOpenSignIn(!openSignIn);}}>Conectare</Button>
 
-                    <Button style={{color: 'white'}} onClick={ () => {
-                      setOpen(!open);
-                    }}>Înregistrare</Button>
+                    <Button style={{color: 'white'}} onClick={() => {handleOpen(!open);}}>Înregistrare</Button>
                   </div>
                 )
               }
@@ -148,31 +145,24 @@ export const Header = ({ currentUser }) => {
           </Box>
         </Toolbar>
         <Modal
+          onClose={() => handleOpen(!open)}
           open={open}
-          onClose={() => setOpen(!open)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={modalstyle}>
-            <Register />
-            <Button
-            style={{backgroundColor: '#1e90ff', width: '100%',  color: 'white'}}
-            onClick={ () => setOpen(!open)}>Finish</Button>
-
+            <Register open={open} handleOpen={handleOpen}/>
           </Box>
         </Modal>
 
         <Modal
           open={openSignIn}
-          onClose={() => setOpenSignIn(!openSignIn)}
+          onClose={() => handleOpenSignIn(!openSignIn)}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
           <Box sx={modalstyle}>
-            <SignIn />
-            <Button
-              style={{backgroundColor: '#1e90ff', width: '100%',  color: 'white'}}
-              onClick={() => setOpenSignIn(!openSignIn)}>Finish</Button>
+            <SignIn open={openSignIn} handleOpenSignIn={handleOpenSignIn}/>
           </Box>
         </Modal>
       </Container>

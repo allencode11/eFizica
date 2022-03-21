@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { auth } from '../../firebase/firebase.utils';
 
-export const SignIn = (changeState) => {
+export const SignIn = ( props ) => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
@@ -40,6 +40,7 @@ export const SignIn = (changeState) => {
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
           try {
             await auth.signInWithEmailAndPassword(email, password);
+            props.handleOpenSignIn(!props.open)
           } catch (e) {
             alert('Parola sau emailul nu este valid!')
           }

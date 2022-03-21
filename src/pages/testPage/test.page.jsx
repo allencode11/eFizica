@@ -53,18 +53,23 @@ export const TestPage = () => {
   const [print, setPrint] = useState([]);
 
   const foundItem = (Arr, q) => {
-    return Arr.find(element => element.question.condition === q.condition);
+    let found = -1;
+    for(let i = 0; i < Arr.length; i++) {
+      if(Arr[i].question.uuid ==  q.uuid)
+        found = i;
+    }
+    return found;
   }
+
   const addToPrint = (printTest, question) => {
-    if(foundItem(printTest, question)) {
-      for( let i = 0; i < printTest.length; i++){
-        if ( printTest[i].question.condition === question.condition ) {
-          printTest.splice(i, 1);
-          i--;
-        }
-      }
+    console.log(foundItem(printTest, question))
+    if ( foundItem(printTest, question) !== -1 ) {
+      printTest.splice(foundItem(printTest, question), 1);
     } else {
-      printTest.push({question, display: true});
+      printTest.push({question: question.question, uuid: question.uuid });
+      console.log(printTest)
+      console.log("question:", question.question)
+
     }
   }
   const handleGrade = async (event) => {
@@ -82,7 +87,6 @@ export const TestPage = () => {
     temp.forEach( question => tep.push({question, display: false, uuid: uuid()}));
     const data = { discipline:questions[0].discipline, grade: questions[0].grade, module: questions[0].module, questions: tep};
     setTests(data);
-    console.log('tests:', tests);
   }, [grade, module]);
 
   useEffect( () => {
@@ -138,7 +142,7 @@ export const TestPage = () => {
         </Button>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around'}}>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', position: 'absolute'}}>
         { tests[0] &&
           <Typography
             style={{ fontWeight: '700',
@@ -170,11 +174,10 @@ export const TestPage = () => {
                 <Card
                   key={element.uuid}
                   onClick={ () => {
-                      addToPrint(print, element.question);
+                      addToPrint(print, element);
+                      console.log('selected:', print)
                       element.display = !element.display;
                       alert('Item adaugat');
-                      console.log('tests:',tests);
-                      console.log('print:',print);
                   }}
                   style={{
                     cursor: 'pointer',
@@ -210,13 +213,32 @@ export const TestPage = () => {
 
         {
           position < selectData.length - 1 ?
-            <Button onClick={ () => {
+            <Button
+              style={{
+                backgroundColor: '#1e90ff',
+                color:'white',
+                marginTop: 10,
+                marginBottom: 10,
+                height: 30,
+                position:'relative',
+                left: '88%'}}
+              onClick={ () => {
+                console.log(print.length);
               if (position < selectData.length - 1)
                 setPosition(position + 1)
-            }}>Next</Button> :
+            }}>
+              Urmatorul
+            </Button> :
             <Button
-              style={{ color: '#1e90ff' }}
-              onClick={() => { setOpenPrinted(!openPrinted); console.log(print); }}>
+              style={{
+                backgroundColor: '#1e90ff',
+                color:'white',
+                marginTop: 10,
+                marginBottom: 10,
+                height: 30,
+                position:'relative',
+                left: '87%'}}
+              onClick={() => { setOpenPrinted(!openPrinted); }}>
               Genereaza
             </Button>
 

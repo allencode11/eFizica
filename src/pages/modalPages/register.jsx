@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { auth, createUserAccountDocument, logInWithEmailAndPassword } from '../../firebase/firebase.utils';
 
-export const Register = () => {
+export const Register = (props) => {
   const [name, setName] = useState(null);
   const [surname, setSurname] = useState(null);
   const [password, setPassword] = useState('');
@@ -63,15 +63,22 @@ export const Register = () => {
             style={{ width: '100%', margin: 2}}
             id="standard-basic"
             label="password"
+            placeholder={'password'}
             onChange={handlePassword}
             variant="standard"/>
 
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
-          const { user } = await auth.createUserWithEmailAndPassword(email, password);
-          await createUserAccountDocument(user, { name, surname, institution });
-          await auth.signInWithEmailAndPassword(email, password);
+          try {
+            const { user } = await auth.createUserWithEmailAndPassword(email, password);
+            await createUserAccountDocument(user, { name, surname, institution });
+            await auth.signInWithEmailAndPassword(email, password);
+            props.handleOpen(!props.open)
+          } catch (e) {
+            alert('Contul deja exista sau datele sunt invalide');
+          }
+
         }}>
-          Create account
+          Creare cont
         </Button>
       </FormControl>
     </div>

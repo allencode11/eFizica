@@ -7,21 +7,21 @@ import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
 
-export const PrintedTest = ( discipline, grade, module, tests ) => {
+export const PrintedTest = ( props ) => {
   const [conditions, setConditions] = useState(Conditions);
+  const [test, setTest] = useState(null);
 
   return (
-    <Container maxWidth="md" onClick={() => { console.log('props', tests) }}>
+    <Container maxWidth="md">
        { /*Datele generale despre test*/ }
-
       <div style={{
         margin: '10px 0',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <Typography> Disciplina: { discipline } </Typography>
-        <Typography> Clasa: { grade } </Typography>
+        <Typography> Disciplina: { props.discipline } </Typography>
+        <Typography> Clasa: { props.grade } </Typography>
       </div>
       <div style={{
         margin: '10px 0',
@@ -52,12 +52,13 @@ export const PrintedTest = ( discipline, grade, module, tests ) => {
         alignItems: 'center',
         justifyContent: 'center',
       }}>
-        <Typography> Unitatea: { module } </Typography>
+        <Typography> Unitatea: { props.module } </Typography>
       </div>
 
       { /*Crearea headerului tabelului*/ }
       <div style={{
         border: '2px solid black',
+        borderBottom: '1px solid black',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -89,56 +90,56 @@ export const PrintedTest = ( discipline, grade, module, tests ) => {
       </div>
 
       {
-        tests.questions &&
-        tests.map((question, index) => {
-          return (
-            <div style={{
+        props.tests &&
+        props.tests.map((element, index) => (
+            <div key={element.uuid} style={{
               display: 'flex',
               flexDirection: 'row',
               textAlign: 'center',
+              border: '2px solid black',
+              borderTop: '1px solid black',
+              borderBottom: '1px solid black',
               justifyContent: 'space-between'
             }}>
               <Typography sx={{
-                width: 15,
+                width: 51,
                 textAlign: 'center',
                 padding: 1.5,
                 borderRight: '2px solid black',
-                borderBottom: '2px solid black',
-                borderLeft: '2px solid black',
-              }}>{index + 1}</Typography>
+                borderBottom: '1px solid black',
+              }} onClick={() => { console.log(element, element.question)}}>{index + 1}</Typography>
 
               <Typography sx={{
                 width: 727,
                 textAlign: 'left',
                 padding: 1.5,
-                borderBottom: '2px solid black'
+                borderBottom: '1px solid black'
               }}>
 
                 <div>{
-                    conditions.filter(ruleElement => ruleElement.name === question.questionType).map(item => (
+                    conditions.filter(ruleElement => ruleElement.name === element.question.questionType).map(item => (
                       <Typography style={{fontWeight: 'bold'}}>{item.rule}</Typography>
                     ))}
                 </div>
                 {
-                  question.questionType === 'complete' ? (
-                    <CompleteItem item={question}/>
-                  ) : question.questionType === 'correspondence' ? (
-                    <CorrespondenceItem item={question}/>
-                  ) : question.questionType === 'problem1' ? (
-                    <FirstProblemItem item={question}/>
-                  ) : question.questionType === 'problem2' ? (
-                    <SecondProblemItem item={question}/>
-                  ) : question.questionType === 'boolean' ? (
-                    <BooleanItem item={question}/>
+                  element.question.questionType === 'complete' ? (
+                    <CompleteItem item={element.question}/>
+                  ) : element.question.questionType === 'correspondence' ? (
+                    <CorrespondenceItem item={element.question}/>
+                  ) : element.question.questionType === 'problem1' ? (
+                    <FirstProblemItem item={element.question}/>
+                  ) : element.question.questionType === 'problem2' ? (
+                    <SecondProblemItem item={element.question}/>
+                  ) : element.question.questionType === 'boolean' ? (
+                    <BooleanItem item={element.question}/>
                   ) : <div>Err</div>
                 }
               </Typography>
               <Typography sx={{
-                width: 30,
+                width: 51,
                 textAlign: 'center',
                 padding: 1.5,
-                borderRight: '2px solid black',
-                borderBottom: '2px solid black',
+                borderBottom: '1px solid black',
                 borderLeft: '2px solid black',
               }}>
                 <div>L</div>
@@ -147,8 +148,7 @@ export const PrintedTest = ( discipline, grade, module, tests ) => {
                 <div>3</div>
               </Typography>
             </div>
-          )
-        })
+        ))
       }
       <Typography sx={{color: 'grey', fontSize: 10, margin: 2, textAlign: 'center'}}>
         Enache Alic  :   https://allencode11.github.io/eFizica

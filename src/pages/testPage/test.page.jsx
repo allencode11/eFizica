@@ -53,6 +53,8 @@ export const TestPage = () => {
   const [position, setPosition] = useState(0);
   const [print, setPrint] = useState({});
 
+  let sum = selectData[position].items;
+
   const addToPrint = (question) => {
     if (!(question.question.questionType in print)) {
       print[question.question.questionType] = [];
@@ -68,7 +70,7 @@ export const TestPage = () => {
       setPrint({ ...print });
     }
 
-    console.log(print);
+    console.log(print[selectData[position].section].length)
   }
   const handleGrade = async (event) => {
     setGrade(event.target.value);
@@ -211,9 +213,10 @@ export const TestPage = () => {
                 </Card>
               ))}
           </div>
-          </div>
-
+        </div>
         {
+          print[selectData[position].section] &&
+            print[selectData[position].section].length === sum ?
           position < selectData.length - 1 ?
             <Button
               style={{
@@ -226,9 +229,13 @@ export const TestPage = () => {
                 left: '88%'}}
               onClick={ () => {
                 console.log(print.length);
-              if (position < selectData.length - 1)
-                setPosition(position + 1)
-            }}>
+                if (position < selectData.length - 1) {
+                  setPosition(position + 1)
+                  sum += selectData[position].items
+                  console.log('sum: ', sum);
+                  console.log('print: ', print);
+                }
+              }}>
               Urmatorul
             </Button> :
             <Link
@@ -251,13 +258,15 @@ export const TestPage = () => {
               grade={tests.grade}
               tests={print}
               onClick={() => {
+                console.log('print: ', print);
                 localStorage.removeItem("selected");
                 localStorage.setItem("selected", JSON.stringify(print));
               }}
               to={{
                 pathname: '/eFizica/printedTest',
-              }}>GENEREAZA</Link>
-
+              }}>
+              GENEREAZA</Link>
+            : null
         }
       </div>
 

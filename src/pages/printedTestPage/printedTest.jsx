@@ -36,7 +36,7 @@ export const PrintedTest = (props) => {
   // console.log(testToPrint, 'here tests');
 
   return (
-    <Container maxWidth="md" onClick={()=> {console.log(location)}}>
+    <Container maxWidth="md" style={{marginBottom: 20}} onClick={()=> {console.log(location)}}>
        { /*Datele generale despre test*/ }
       <div style={{
         margin: '10px 0',
@@ -81,8 +81,6 @@ export const PrintedTest = (props) => {
       </div>
 
       <Container style={{
-        border: '2px solid black',
-        borderBottom: '1px solid black',
         display: 'flex',
         padding: 0,
         flexDirection: 'row',
@@ -95,7 +93,7 @@ export const PrintedTest = (props) => {
             padding: 1.6,
             paddingTop: 0.5,
             paddingBottom: 0.5,
-            borderRight: '2px solid black'
+            border: '2px solid black'
           }}
         >
           Nr.
@@ -106,6 +104,8 @@ export const PrintedTest = (props) => {
             width: '100%',
             textAlign: 'center',
             padding: 0.5,
+            border: '2px solid black',
+            borderLeft: '0px solid black'
           }}
         >
           Item
@@ -117,7 +117,8 @@ export const PrintedTest = (props) => {
             padding: 1,
             paddingTop: 0.5,
             paddingBottom: 0.5,
-            borderLeft: '2px solid black'
+            border: '2px solid black',
+            borderLeft: '0px solid black'
           }}
         >
           Scor
@@ -132,8 +133,6 @@ export const PrintedTest = (props) => {
             flexDirection: 'row',
             textAlign: 'center',
             border: '2px solid black',
-            borderTop: '1px solid black',
-            borderBottom: '1px solid black',
             justifyContent: 'space-between'
           }}>
             <Typography
@@ -142,7 +141,7 @@ export const PrintedTest = (props) => {
                 textAlign: 'center',
                 padding: 1.5,
                 borderRight: '2px solid black',
-                borderBottom: '1px solid black',
+                borderBottom: '2px solid black',
               }}
             >
               {questionCount++}
@@ -152,7 +151,7 @@ export const PrintedTest = (props) => {
               width: '100%',
               textAlign: 'left',
               padding: 1.5,
-              borderBottom: '1px solid black'
+              borderBottom: '2px solid black'
             }}>
               <div>
                 {
@@ -185,7 +184,7 @@ export const PrintedTest = (props) => {
               width: 51,
               textAlign: 'center',
               padding: 1.5,
-              borderBottom: '1px solid black',
+              borderBottom: '2px solid black',
               borderLeft: '2px solid black',
             }}>
               <Typography>L</Typography>

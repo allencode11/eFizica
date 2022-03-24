@@ -5,7 +5,7 @@ export const FirstProblemItem = ({item}) => {
       {[
         ...Array(Number(item.condition[1])),
       ].map((value, index) => (
-        <div style={{height: 25}} id={index + 1} key={index}/>
+        <div style={{height: 25, paddingBottom: 15}} id={index + 1} key={index}/>
       ))
       }
     </div>

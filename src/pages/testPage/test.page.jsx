@@ -35,7 +35,6 @@ const selectData = [
     section: 'problem1',
     items: 2,
     component: 'FirstProblem',
-
   },
   {
     section: 'problem2',
@@ -228,12 +227,9 @@ export const TestPage = () => {
                 position:'relative',
                 left: '88%'}}
               onClick={ () => {
-                console.log(print.length);
                 if (position < selectData.length - 1) {
                   setPosition(position + 1)
                   sum += selectData[position].items
-                  console.log('sum: ', sum);
-                  console.log('print: ', print);
                 }
               }}>
               Urmatorul
@@ -258,9 +254,10 @@ export const TestPage = () => {
               grade={tests.grade}
               tests={print}
               onClick={() => {
-                console.log('print: ', print);
                 localStorage.removeItem("selected");
+                localStorage.removeItem("testData");
                 localStorage.setItem("selected", JSON.stringify(print));
+                localStorage.setItem("testData", JSON.stringify({ discipline: tests.discipline, module: tests.module, grade: tests.grade }));
               }}
               to={{
                 pathname: '/eFizica/printedTest',

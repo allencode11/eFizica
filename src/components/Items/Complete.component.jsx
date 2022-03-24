@@ -1,5 +1,5 @@
 export const CompleteItem = ({item}) => {
   return (
-    <div>{ item.condition.replaceAll('%', '________________ ') }</div>
+    <div style={{paddingBottom: 5 }}>{ item.condition.replaceAll('%', '________________ ') }</div>
   )
 }

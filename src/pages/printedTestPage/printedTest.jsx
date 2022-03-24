@@ -10,6 +10,7 @@ import { useLocation, useParams } from 'react-router-dom';
 
 export const PrintedTest = (props) => {
   const tests = JSON.parse(localStorage.getItem("selected")) || props.tests;
+  const testData = JSON.parse(localStorage.getItem("testData")) || props.tests;
   const [conditions, setConditions] = useState(Conditions);
   let questionCount = 1;
 
@@ -31,12 +32,8 @@ export const PrintedTest = (props) => {
     return qArr;
   }
 
-  console.log(tests);
-
-  // console.log(testToPrint, 'here tests');
-
   return (
-    <Container maxWidth="md" style={{marginBottom: 20}} onClick={()=> {console.log(location)}}>
+    <Container maxWidth="md" style={{marginBottom: 20}}>
        { /*Datele generale despre test*/ }
       <div style={{
         margin: '10px 0',
@@ -44,8 +41,8 @@ export const PrintedTest = (props) => {
         alignItems: 'center',
         justifyContent: 'space-between',
       }}>
-        <Typography> Disciplina: { props.discipline } </Typography>
-        <Typography> Clasa: { props.grade } </Typography>
+        <Typography> Disciplina: { testData.discipline } </Typography>
+        <Typography> Clasa: { testData.grade } </Typography>
       </div>
       <div style={{
         margin: '10px 0',
@@ -77,7 +74,7 @@ export const PrintedTest = (props) => {
         justifyContent: 'center',
         padding: 0,
       }}>
-        <Typography> Unitatea: { props.module } </Typography>
+        <Typography> Unitatea: { testData.module } </Typography>
       </div>
 
       <Container style={{
@@ -89,11 +86,12 @@ export const PrintedTest = (props) => {
       }}>
         <Typography
           sx={{
+            width: 48,
             textAlign: 'center',
             padding: 1.6,
             paddingTop: 0.5,
             paddingBottom: 0.5,
-            border: '2px solid black'
+            border: '2px solid black',
           }}
         >
           Nr.
@@ -104,8 +102,9 @@ export const PrintedTest = (props) => {
             width: '100%',
             textAlign: 'center',
             padding: 0.5,
-            border: '2px solid black',
-            borderLeft: '0px solid black'
+            borderRight: '2px solid black',
+            borderBottom: '2px solid black',
+            borderTop: '2px solid black'
           }}
         >
           Item
@@ -113,12 +112,14 @@ export const PrintedTest = (props) => {
 
         <Typography
           sx={{
+            width: 50,
             textAlign: 'center',
             padding: 1,
             paddingTop: 0.5,
             paddingBottom: 0.5,
-            border: '2px solid black',
-            borderLeft: '0px solid black'
+            borderRight: '2px solid black',
+            borderBottom: '2px solid black',
+            borderTop: '2px solid black'
           }}
         >
           Scor
@@ -132,7 +133,6 @@ export const PrintedTest = (props) => {
             display: 'flex',
             flexDirection: 'row',
             textAlign: 'center',
-            border: '2px solid black',
             justifyContent: 'space-between'
           }}>
             <Typography
@@ -142,6 +142,7 @@ export const PrintedTest = (props) => {
                 padding: 1.5,
                 borderRight: '2px solid black',
                 borderBottom: '2px solid black',
+                borderLeft: '2px solid black'
               }}
             >
               {questionCount++}
@@ -151,7 +152,7 @@ export const PrintedTest = (props) => {
               width: '100%',
               textAlign: 'left',
               padding: 1.5,
-              borderBottom: '2px solid black'
+              borderBottom: '2px solid black',
             }}>
               <div>
                 {
@@ -160,6 +161,7 @@ export const PrintedTest = (props) => {
                     .map(item => (
                       <Typography key={item.rule} style={{ fontWeight: 'bold' }}>
                         {item.rule}
+                        <div style={{height: 10}} />
                       </Typography>
                     ))
                 }
@@ -167,9 +169,13 @@ export const PrintedTest = (props) => {
               {
                 randomise(tests[key]).map((el, index) => {
                   return el.question.questionType === 'complete' ? (
-                    <CompleteItem key={index} style={{ marginBottom: 20 }} item={el.question}/>
+                    <CompleteItem key={index} style={{ marginBottom: 20}} item={el.question}/>
                   ) : el.question.questionType === 'correspondence' ? (
-                    <CorrespondenceItem key={index} style={{ marginBottom: 20 }} title={el.question.condition[0]} variants={el.question.condition[1].split(',')}/>
+                    <CorrespondenceItem key={index}
+                                        style={{ marginBottom: 10 }}
+                                        title={el.question.condition[0]}
+                                        variants={el.question.condition[1].split(',')}
+                    />
                   ) : el.question.questionType === 'problem1' ? (
                     <FirstProblemItem key={index} style={{ marginBottom: 20 }} item={el.question}/>
                   ) : el.question.questionType === 'problem2' ? (
@@ -184,13 +190,25 @@ export const PrintedTest = (props) => {
               width: 51,
               textAlign: 'center',
               padding: 1.5,
+              borderRight: '2px solid black',
               borderBottom: '2px solid black',
-              borderLeft: '2px solid black',
+              borderLeft: '2px solid black'
             }}>
+
               <Typography>L</Typography>
-              <Typography>0</Typography>
-              <Typography>1</Typography>
-              <Typography>3</Typography>
+              {
+                conditions
+                  .filter(ruleElement => ruleElement.name === tests[key][0].question.questionType)
+                  .map(item => {
+                    const components = [];
+                    for (let i = 0; i <= item.points; i++) {
+                       components.push((
+                        <Typography>{i}</Typography>
+                      ))
+                    }
+                    return components
+                  })
+              }
             </Container>
           </div>
         ))

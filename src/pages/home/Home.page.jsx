@@ -44,7 +44,7 @@ const cards = [
 export const HomePage = () => {
   const navigate = useNavigate();
   return (
-    <Container sx={{ marginTop: 10}} maxWidth={'xl'}>
+    <Container sx={{ marginTop: 10 }} maxWidth={'xl'}>
       <Grid container spacing={2}>
         {cards.map((card) => (
           <Grid item key={card.id} sm={2.4} >

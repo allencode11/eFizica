@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/eFizica/static/css/main.f9e29a76.css",
-    "main.js": "/eFizica/static/js/main.fa5c7fbf.js",
+    "main.js": "/eFizica/static/js/main.03858020.js",
     "static/js/787.0fd49245.chunk.js": "/eFizica/static/js/787.0fd49245.chunk.js",
     "static/media/test.pdf": "/eFizica/static/media/test.27876d3dbc4dc0813af7.pdf",
     "static/media/proiectare.png": "/eFizica/static/media/proiectare.26e2175c375d0a02a1f6.png",
@@ -12,11 +12,11 @@
     "static/media/table.png": "/eFizica/static/media/table.e13aa1e2262f0906c0d2.png",
     "index.html": "/eFizica/index.html",
     "main.f9e29a76.css.map": "/eFizica/static/css/main.f9e29a76.css.map",
-    "main.fa5c7fbf.js.map": "/eFizica/static/js/main.fa5c7fbf.js.map",
+    "main.03858020.js.map": "/eFizica/static/js/main.03858020.js.map",
     "787.0fd49245.chunk.js.map": "/eFizica/static/js/787.0fd49245.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f9e29a76.css",
-    "static/js/main.fa5c7fbf.js"
+    "static/js/main.03858020.js"
   ]
 }

@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import {Register} from "../../pages/modalPages/register";
 import {Modal} from "@mui/material";
-import { auth } from '../../firebase/firebase.utils';
+import { auth, isAdmin } from '../../firebase/firebase.utils';
 import { SignIn } from '../../pages/modalPages/signin';
 
 const pages = [
@@ -59,7 +59,7 @@ export const Header = ({ currentUser }) => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#1e90ff'}}>
+    <AppBar position="static" sx={{ backgroundColor: '#1e90ff'}} onClick={async () => await console.log(isAdmin(currentUser.email))}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography

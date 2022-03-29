@@ -43,6 +43,18 @@ export const createUserAccountDocument = async (userAuth, additionalData) => {
   }
 }
 
+export const isAdmin = async (email) => {
+  const usersRef = firestore.collection('users');
+  const querySnapshot = await usersRef.get();
+
+  let result = false;
+  querySnapshot.docs.filter((user) => user.data().email === email);
+
+  if (querySnapshot.docs[0].data().role === 'admin')
+    return true
+  else return false
+
+};
 
 export const createQuestion = async ( grade, module, {...question }) => {
   if(!question && !grade && !module) return;

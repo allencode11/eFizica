@@ -70,7 +70,8 @@ export const Register = (props) => {
         <Button style={{marginTop: 5}} variant="contained" onClick={ async () => {
           try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password);
-            await createUserAccountDocument(user, { name, surname, institution });
+            const role = 'user';
+            await createUserAccountDocument(user, { name, surname, institution, role });
             await auth.signInWithEmailAndPassword(email, password);
             props.handleOpen(!props.open)
           } catch (e) {

@@ -33,7 +33,12 @@ const selectData = [
   },
   {
     section: 'problem1',
-    items: 2,
+    items: 1,
+    component: 'FirstProblem',
+  },
+  {
+    section: 'problem1',
+    items: 1,
     component: 'FirstProblem',
   },
   {
@@ -165,7 +170,7 @@ export const TestPage = () => {
             Din lista de mai jos selecteaza {selectData[position].items} itemi!
           </Typography>
 
-          <div>
+          <div style={{marginBottom: 10}}>
             {
               tests.questions &&
               tests.questions
@@ -206,7 +211,7 @@ export const TestPage = () => {
                     {
                       element.display ? <img
                         src={require('../../assets/done.png')}
-                        style={{width: '3%', height: '4%', position: 'relative', left: 12, top: -7}}/> : null
+                        style={{width: '3%', height: '4%'}}/> : null
                     }
                   </CardContent>
                 </Card>
@@ -220,12 +225,13 @@ export const TestPage = () => {
             <Button
               style={{
                 backgroundColor: '#1e90ff',
-                color:'white',
+                color: 'white',
                 marginTop: 10,
                 marginBottom: 10,
                 height: 30,
-                position:'relative',
-                left: '88%'}}
+                position: 'absolute',
+                right: '28%'
+              }}
               onClick={ () => {
                 if (position < selectData.length - 1) {
                   setPosition(position + 1)
@@ -244,8 +250,9 @@ export const TestPage = () => {
                 padding: 10,
                 borderRadius: 5,
                 fontWeight: 500,
-                position:'relative',
-                left: '87%'}}
+                position: 'absolute',
+                right: '28%'
+            }}
               discipline={tests.discipline}
               params={{
                 print,
@@ -301,7 +308,7 @@ const modalStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  bgcolor: 'background.paper',
+  backgroundColor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,

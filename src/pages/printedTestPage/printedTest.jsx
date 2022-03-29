@@ -7,6 +7,7 @@ import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
 import { useLocation, useParams } from 'react-router-dom';
+import { MathComponent } from 'mathjax-react'
 
 export const PrintedTest = (props) => {
   const tests = JSON.parse(localStorage.getItem("selected")) || props.tests;
@@ -54,6 +55,8 @@ export const PrintedTest = (props) => {
         <Typography> Punctaj acumulat: ____</Typography>
         <Typography> Nota: ___</Typography>
         <Typography> Punctaj total: 25</Typography>
+        <Typography><MathComponent tex={String.raw`x^2`} /></Typography>
+
       </div>
       <div style={{
         margin: '10px 0',
@@ -66,6 +69,7 @@ export const PrintedTest = (props) => {
       }}>
         <Typography> Nume, prenume profesor: ___________________</Typography>
         <Typography> Semnatura: ________________</Typography>
+        <Typography><MathComponent tex={String.raw`\int_0^1 x^2\ dx`} /></Typography>
       </div>
       <div style={{
         width: '100%',
@@ -177,7 +181,7 @@ export const PrintedTest = (props) => {
                                         variants={el.question.condition[1].split(',')}
                     />
                   ) : el.question.questionType === 'problem1' ? (
-                    <FirstProblemItem key={index} style={{ marginBottom: 20 }} item={el.question}/>
+                    <FirstProblemItem key={index} style={{ marginBottom: 20, border: '1px solid #cc'}} item={el.question}/>
                   ) : el.question.questionType === 'problem2' ? (
                     <SecondProblemItem key={index} style={{ marginBottom: 20 }} item={el.question}/>
                   ) : el.question.questionType === 'boolean' ? (

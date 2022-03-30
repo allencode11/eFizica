@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { auth, createUserAccountDocument } from './firebase/firebase.utils';
+import { Routes, Route } from 'react-router-dom';
+import { auth, isAdmin } from './firebase/firebase.utils';
 
 import './App.css';
 
@@ -16,14 +16,18 @@ import { SHomePage } from './pages/simplyHome/simplyHome';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
+  const [role, setRole] = React.useState(null);
 
   const currentUrl = window.location.pathname;
 
   useEffect( () => {
     auth.onAuthStateChanged( async user => {
       setCurrentUser(user);
-    })
+      setRole(await isAdmin(user.email));
+    });
   }, [currentUser]);
+
+  console.log('role: ', role);
 
   return (
     <>
@@ -34,7 +38,7 @@ function App() {
           currentUser ? (
             <Routes>
               <Route path="/eFizica" element={<HomePage />}/>
-              <Route path="/eFizica/tests" element={<TestPage />} />
+              <Route path="/eFizica/tests" element={<TestPage role={role}/>} />
               <Route path="/eFizica/lab" element={<LabPage />} />
               <Route path="/eFizica/printedTest" element={<PrintedTest />} />
               <Route path="/eFizica/plan" element={<PlanPage />} />

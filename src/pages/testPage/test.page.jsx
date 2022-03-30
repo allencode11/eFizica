@@ -5,7 +5,7 @@ import { CreateQuestion } from '../modalPages/createQuestion';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { getQuestion } from '../../firebase/firebase.utils';
+import { updateItem, deleteItem, getQuestion, isAdmin } from '../../firebase/firebase.utils';
 import { CompleteItem } from '../../components/Items/Complete.component';
 import { CorrespondenceItem } from '../../components/Items/Correspondence.component';
 import { FirstProblemItem } from '../../components/Items/Problem1.component';
@@ -48,7 +48,7 @@ const selectData = [
   },
 ]
 
-export const TestPage = () => {
+export const TestPage = (props) => {
   const [tests, setTests] = useState({});
   const [open, setOpen] = useState(false);
   const [openPrinted, setOpenPrinted] = useState(false);
@@ -141,10 +141,11 @@ export const TestPage = () => {
             <MenuItem value={12}>12</MenuItem>
           </Select>
         </div>
-
-        <Button style={{backgroundColor: '#1e90ff'}} onClick={() => setOpen(!open)} variant="contained">
-          Creaza intrebare
-        </Button>
+        {
+          props.role === 'admin' ? <Button style={{backgroundColor: '#1e90ff'}} onClick={() => setOpen(!open)} variant="contained">
+            Creaza intrebare
+          </Button> : null
+        }
       </div>
 
       <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around', position: 'absolute'}}>
@@ -178,20 +179,21 @@ export const TestPage = () => {
               .map((element) => (
                 <Card
                   key={element.uuid}
-                  onClick={ () => {
+                  style={{
+                    margin: '20px 0 0 0',
+                    border: element.display ? '1px solid #1e90ff' : '1px solid #ccc',
+                  }}>
+                  <CardContent
+                    style={{display: 'flex', flexDirection: 'row' }}
+                    onClick={ () => {
                       addToPrint(element);
                       const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
                       const newTests = tests;
                       newTests.questions[index].display = !element.display;
                       setTests({ ...newTests });
-                  }}
-                  style={{
-                    cursor: 'pointer',
-                    margin: '20px 0 0 0',
-                    border: element.display ? '1px solid #1e90ff' : '1px solid #ccc',
-                  }}>
-                  <CardContent style={{display: 'flex', flexDirection: 'row'}}>
-                    <Typography style={{width: '97%'}}>
+                    }}
+                  >
+                    <div style={{width: '97%'}}>
                       {
                         element.question.questionType === 'complete' ? (
                           <CompleteItem item={element.question}/>
@@ -207,13 +209,17 @@ export const TestPage = () => {
                           <BooleanItem item={element.question}/>
                         ) : null
                       }
-                    </Typography>
+                    </div>
                     {
                       element.display ? <img
                         src={require('../../assets/done.png')}
                         style={{width: '3%', height: '4%'}}/> : null
                     }
                   </CardContent>
+                  <div style={{display: 'flex', justifyContent: 'right', paddingBottom: 10}}>
+                    <img src={require('../../assets/trash.png')} style={{width: '3%', height: '4%'}}/>
+                    <img src={require('../../assets/edit.png')} style={{width: '3%', height: '4%'}}/>
+                  </div>
                 </Card>
               ))}
           </div>

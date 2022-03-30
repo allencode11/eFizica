@@ -47,12 +47,13 @@ export const isAdmin = async (email) => {
   const usersRef = firestore.collection('users');
   const querySnapshot = await usersRef.get();
 
-  let result = false;
+  console.log('email form utils: ', email)
+  console.log(querySnapshot.docs)
   querySnapshot.docs.filter((user) => user.data().email === email);
+  console.log('email form db: ', querySnapshot.docs[0].data())
+  console.log('role form db: ', querySnapshot.docs[0].data().role)
 
-  if (querySnapshot.docs[0].data().role === 'admin')
-    return true
-  else return false
+  return querySnapshot.docs[0].data().role
 
 };
 
@@ -119,3 +120,20 @@ export const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 export default firebase;
+
+export const deleteItem = async (module, grade, id) => {
+  firestore.collection(`physics/${grade}/${module}/`).doc(id).delete().then(() => {
+    console.log("Document successfully deleted!");
+  }).catch((error) => {
+    console.error("Error removing document: ", error);
+  });
+};
+
+export const updateItem = async ( id, newItem) => {
+  firestore.collection(`test`).doc(id).update(newItem).then(() => {
+    console.log("Document successfully deleted!");
+  }).catch((error) => {
+    console.error("Error removing document: ", error);
+  });
+};
+

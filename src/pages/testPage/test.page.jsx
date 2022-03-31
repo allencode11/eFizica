@@ -142,9 +142,9 @@ export const TestPage = (props) => {
           </Select>
         </div>
         {
-          props.role === 'admin' ? <Button style={{backgroundColor: '#1e90ff'}} onClick={() => setOpen(!open)} variant="contained">
+          props.role === 'admin' && <Button style={{backgroundColor: '#1e90ff'}} onClick={() => setOpen(!open)} variant="contained">
             Creaza intrebare
-          </Button> : null
+          </Button>
         }
       </div>
 
@@ -217,8 +217,20 @@ export const TestPage = (props) => {
                     }
                   </CardContent>
                   <div style={{display: 'flex', justifyContent: 'right', paddingBottom: 10}}>
-                    <img src={require('../../assets/trash.png')} style={{width: '3%', height: '4%'}}/>
-                    <img src={require('../../assets/edit.png')} style={{width: '3%', height: '4%'}}/>
+                    {
+                      props.role === 'admin' && <img
+                        src={require('../../assets/trash.png')}
+                        style={{width: '3%', height: '4%', cursor: 'pointer'}}
+                        onClick={async () => {
+                          console.log(props.user)
+                          // deleteItem(element.module, element.grade, element.question.condition)
+                          await isAdmin(props.user.email);
+                        }
+                        }/>
+                    }
+                    {
+                      props.role === 'admin' && <img src={require('../../assets/edit.png')} style={{width: '3%', height: '4%'}}/>
+                    }
                   </div>
                 </Card>
               ))}

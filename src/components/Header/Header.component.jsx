@@ -59,8 +59,8 @@ export const Header = ({ currentUser }) => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#1e90ff'}} onClick={async () =>  console.log(await isAdmin(currentUser.email))}>
-      <Container maxWidth="xl">`
+    <AppBar position="static" sx={{ backgroundColor: '#1e90ff'}}>
+      <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
             variant="h6"

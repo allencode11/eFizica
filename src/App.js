@@ -16,7 +16,7 @@ import { SHomePage } from './pages/simplyHome/simplyHome';
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
-  const [role, setRole] = React.useState(null);
+  const [role, setRole] = React.useState('user');
 
   const currentUrl = window.location.pathname;
 
@@ -28,6 +28,7 @@ function App() {
   }, [currentUser]);
 
   console.log('role: ', role);
+  console.log('email: ', currentUser);
 
   return (
     <>
@@ -39,11 +40,11 @@ function App() {
             <Routes>
               <Route path="/eFizica" element={<HomePage />}/>
               <Route path="/eFizica/tests" element={<TestPage role={role}/>} />
-              <Route path="/eFizica/lab" element={<LabPage />} />
+              <Route path="/eFizica/lab" element={<LabPage role={role}/>} />
               <Route path="/eFizica/printedTest" element={<PrintedTest />} />
-              <Route path="/eFizica/plan" element={<PlanPage />} />
-              <Route path="/eFizica/calendar" element={<CalendarPage />} />
-              <Route path="/eFizica/tables" element={<TablesPage />} />
+              <Route path="/eFizica/plan" element={<PlanPage role={role}/>} />
+              <Route path="/eFizica/calendar" element={<CalendarPage role={role}/>} />
+              <Route path="/eFizica/tables" element={<TablesPage role={role}/>} />
             </Routes>
           ) :  (
             <Routes>

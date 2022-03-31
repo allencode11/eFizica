@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-export const PlanPage = () => {
+export const PlanPage = (props) => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pdfFile, setPdfFile] = useState(samplePDF);
   const [loading, setLoading] = useState(false);
@@ -32,24 +32,6 @@ export const PlanPage = () => {
   );
 
   return (
-    // <div>
-    //   {
-    //     samplePDF ? (
-    //       <Document file={samplePDF} onLoadError={console.error}>
-    //         <Page pageNumber={pageNumber}/>
-    //       </Document>
-    //     ) : uploadButton
-    //   }
-    //   <Upload
-    //     name="file"
-    //     listType="picture-card"
-    //     className="file-uploader"
-    //     showUploadList={false}
-    //     onChange={onChangeFile}
-    //     style={{width: '80%', display:'flex', flexDirection: 'column', justifyContent: 'space-between'}}
-    //     />
-    //   <Button onClick={() => {handleChangePage(pageNumber + 1)}} >Next</Button>
-    // </div>
     <div>
       <Typography>Scuze de deranj!</Typography>
       <Typography>Acesta pagina va fi actualizata in curand</Typography>

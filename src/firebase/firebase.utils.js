@@ -47,13 +47,14 @@ export const isAdmin = async (email) => {
   const usersRef = firestore.collection('users');
   const querySnapshot = await usersRef.get();
 
-  console.log('email form utils: ', email)
-  console.log(querySnapshot.docs)
-  querySnapshot.docs.filter((user) => user.data().email === email);
-  console.log('email form db: ', querySnapshot.docs[0].data())
-  console.log('role form db: ', querySnapshot.docs[0].data().role)
+  const response = [];
 
-  return querySnapshot.docs[0].data().role
+  querySnapshot.docs.forEach(item=>{
+    if (item.data().email === email) {
+      response.push(item.data());
+    }
+  })
+  return response[0].role
 
 };
 
@@ -104,7 +105,6 @@ provider.setCustomParameters({ prompt: 'select_account'})
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
-// export const storage = firebase.storage();
 
 export const signInWithGoogle = async () => {
   await auth.signInWithPopup(provider);
@@ -121,15 +121,29 @@ export const logInWithEmailAndPassword = async (email, password) => {
 };
 export default firebase;
 
-export const deleteItem = async (module, grade, id) => {
-  firestore.collection(`physics/${grade}/${module}/`).doc(id).delete().then(() => {
-    console.log("Document successfully deleted!");
-  }).catch((error) => {
-    console.error("Error removing document: ", error);
-  });
+export const deleteItem = async (module, grade, field) => {
+  const itemRef = await firestore.collection(`physics/${grade}/${module}/`).get();
+  itemRef.docs.forEach((item) => {
+    console.log('item',item.data())
+  })
+  // try {
+  //   console.log('itemRef: ', itemRef)
+  //   await itemRef.get().then((querySnapshot) => {
+  //   querySnapshot.forEach(function(doc) {
+  //     doc.ref.delete().then(()=>console.log('success'));
+  //   });
+  // });
+  // } catch (e) {
+  //   console.log(e)
+  // }
+  //   itemRef.doc(item).delete().then(() => {
+  //   console.log("Document successfully deleted!");
+  // }).catch((error) => {
+  //   console.error("Error removing document: ", error);
+  // });
 };
 
-export const updateItem = async ( id, newItem) => {
+export const updateItem = async ( id, newItem ) => {
   firestore.collection(`test`).doc(id).update(newItem).then(() => {
     console.log("Document successfully deleted!");
   }).catch((error) => {

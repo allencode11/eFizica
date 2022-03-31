@@ -5,7 +5,7 @@ import { Card, Modal } from '@mui/material';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import Button from '@mui/material/Button';
 
-export const CalendarPage = () => {
+export const CalendarPage = (props) => {
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [calendars, setCalendars] = useState(null);
@@ -66,17 +66,19 @@ export const CalendarPage = () => {
         ))
         : null
       }
-      <Upload
-        name="image"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        beforeUpload={beforeUpload}
-        customRequest={() => null}
-        onChange={onChangeImage}
-      >
-        {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-      </Upload>
+      {
+        props.role === 'admin' && <Upload
+          name="image"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          customRequest={() => null}
+          onChange={onChangeImage}
+        >
+          {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+      }
       {image ? <Button onClick={ async () => {
         await createCalendar(image);
       }}>Adaugare</Button> : null}

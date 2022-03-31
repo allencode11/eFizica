@@ -1,4 +1,4 @@
-import { ImageList, ImageListItem, ImageListItemBar, ListSubheader, Modal } from '@mui/material';
+import { Modal } from '@mui/material';
 import React, { useCallback, useEffect, useState } from 'react';
 import { message, Upload } from 'antd';
 import Button from '@mui/material/Button';
@@ -6,10 +6,8 @@ import { createTable, getTable } from '../../firebase/firebase.tables.data';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Grid, Card } from '@mui/material';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { SignIn } from '../modalPages/signin';
 
-export const TablesPage = () => {
+export const TablesPage = (props) => {
   const [image, setImage] = useState('');
   const [imageTitle, setImageTitle] = useState('');
   const [loading, setLoading] = useState(false);
@@ -82,18 +80,20 @@ export const TablesPage = () => {
         ))
         : null
         }
-      <Upload
-        sx={{ marginTop: '5%'}}
-        name="image"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        beforeUpload={beforeUpload}
-        customRequest={() => null}
-        onChange={onChangeImage}
-      >
-        {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-      </Upload>
+      {
+        props.role === 'admin' && <Upload
+          sx={{ marginTop: '5%'}}
+          name="image"
+          listType="picture-card"
+          className="avatar-uploader"
+          showUploadList={false}
+          beforeUpload={beforeUpload}
+          customRequest={() => null}
+          onChange={onChangeImage}
+        >
+          {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+        </Upload>
+      }
       {image ? <Button onClick={ async () => {
         await createTable({ discipline: 'physics', imageUrl: image, title: imageTitle });
       }}>Add</Button> : null}
@@ -125,7 +125,7 @@ const modalstyle = {
   maxHeight: '90%',
   paddingTop: 10,
   paddingBottom: 10,
-  bgcolor: 'background.paper',
+  backgroundColor: 'background.paper',
   boxShadow: 24,
   p: 4,
 };

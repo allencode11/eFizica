@@ -5,15 +5,15 @@ import { CreateQuestion } from '../modalPages/createQuestion';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import { updateItem, deleteItem, getQuestion, isAdmin } from '../../firebase/firebase.utils';
+import { deleteItem, getQuestion } from '../../firebase/firebase.utils';
 import { CompleteItem } from '../../components/Items/Complete.component';
 import { CorrespondenceItem } from '../../components/Items/Correspondence.component';
 import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
-import { PrintedTest } from '../printedTestPage/printedTest';
 import { v4 as uuid } from 'uuid';
 import { Link } from 'react-router-dom';
+import { UpdateQuestion } from '../modalPages/updateQuestion';
 
 const selectData = [
   {
@@ -51,11 +51,12 @@ const selectData = [
 export const TestPage = (props) => {
   const [tests, setTests] = useState({});
   const [open, setOpen] = useState(false);
-  const [openPrinted, setOpenPrinted] = useState(false);
   const [grade, setGrade] = useState('7');
   const [module, setModule] = useState('Statica fluidelor');
   const [position, setPosition] = useState(0);
   const [print, setPrint] = useState({});
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [itemToUpdate, setItemToUpdate] = useState(null);
 
   let sum = selectData[position].items;
 
@@ -82,6 +83,10 @@ export const TestPage = (props) => {
 
   const handleModule = async (event) => {
     setModule(event.target.value);
+  }
+
+  const handleOpenUpdate = async () => {
+    setOpenUpdate(!openUpdate);
   }
 
   const fetchMyAPI = useCallback(async () => {
@@ -222,14 +227,19 @@ export const TestPage = (props) => {
                         src={require('../../assets/trash.png')}
                         style={{width: '3%', height: '4%', cursor: 'pointer'}}
                         onClick={async () => {
-                          console.log(props.user)
-                          // deleteItem(element.module, element.grade, element.question.condition)
-                          await isAdmin(props.user.email);
+                          await deleteItem(tests.module, tests.grade, element.question.condition)
                         }
                         }/>
                     }
                     {
-                      props.role === 'admin' && <img src={require('../../assets/edit.png')} style={{width: '3%', height: '4%'}}/>
+                      props.role === 'admin' && <img
+                        src={require('../../assets/edit.png')}
+                        style={{width: '3%', height: '4%'}}
+                        onClick={async () => {
+                          handleOpenUpdate(!openUpdate);
+                          setItemToUpdate(element.question);
+                        }
+                      }/>
                     }
                   </div>
                 </Card>
@@ -307,13 +317,13 @@ export const TestPage = (props) => {
       </Modal>
 
       <Modal
-        open={openPrinted}
-        onClose={() => setOpenPrinted(!openPrinted)}
+        open={openUpdate}
+        onClose={() => handleOpenUpdate()}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
         <Box sx={modalStyle}>
-          <PrintedTest discipline={tests.discipline} module={tests.module} grade={tests.grade} tests={print}/>
+          <UpdateQuestion item={itemToUpdate} changeState={handleOpenUpdate} grade={grade} module={module}/>
         </Box>
       </Modal>
 

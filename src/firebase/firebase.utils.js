@@ -76,7 +76,7 @@ export const createQuestion = async ( grade, module, {...question }) => {
   return;
 }
 
-export const getQuestion = async ( grade, module) => {
+export const getQuestion = async ( grade, module ) => {
   if(!grade && !module) return;
 
   const itemsArr = [];
@@ -121,33 +121,36 @@ export const logInWithEmailAndPassword = async (email, password) => {
 };
 export default firebase;
 
-export const deleteItem = async (module, grade, field) => {
-  const itemRef = await firestore.collection(`physics/${grade}/${module}/`).get();
-  itemRef.docs.forEach((item) => {
-    console.log('item',item.data())
-  })
-  // try {
-  //   console.log('itemRef: ', itemRef)
-  //   await itemRef.get().then((querySnapshot) => {
-  //   querySnapshot.forEach(function(doc) {
-  //     doc.ref.delete().then(()=>console.log('success'));
-  //   });
-  // });
-  // } catch (e) {
-  //   console.log(e)
-  // }
-  //   itemRef.doc(item).delete().then(() => {
-  //   console.log("Document successfully deleted!");
-  // }).catch((error) => {
-  //   console.error("Error removing document: ", error);
-  // });
-};
+export const deleteItem = async (module, grade, condition) => {
+  const itemsRef = await firestore.collection(`physics/${grade}/${module}`).where('condition', '==', condition);
+  const item = await itemsRef.get();
 
-export const updateItem = async ( id, newItem ) => {
-  firestore.collection(`test`).doc(id).update(newItem).then(() => {
+  const id = item.docs[0].id;
+  console.log(id);
+
+  firestore.collection(`physics/${grade}/${module}`).doc(id).delete().then(() => {
     console.log("Document successfully deleted!");
   }).catch((error) => {
     console.error("Error removing document: ", error);
+  });
+
+};
+
+export const updateItem = async ( condition, newItem, module, grade ) => {
+  console.log('grade: ', grade);
+  console.log('module: ', module);
+
+  const itemsRef = await firestore.collection(`physics/${grade}/${module}`).where('condition', '==', condition);
+  const item = await itemsRef.get();
+
+  const id = item.docs[0].id;
+
+  firestore.collection(`physics/${grade}/${module}`).doc(id).update({
+    ...newItem
+  }).then(() => {
+    console.log("Document successfully updated!");
+  }).catch((error) => {
+    console.error("Error updating document: ", error);
   });
 };
 

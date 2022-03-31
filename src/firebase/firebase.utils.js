@@ -137,16 +137,14 @@ export const deleteItem = async (module, grade, condition) => {
 };
 
 export const updateItem = async ( condition, newItem, module, grade ) => {
-  console.log('grade: ', grade);
-  console.log('module: ', module);
-
   const itemsRef = await firestore.collection(`physics/${grade}/${module}`).where('condition', '==', condition);
   const item = await itemsRef.get();
 
   const id = item.docs[0].id;
-
+  console.log(newItem);
   firestore.collection(`physics/${grade}/${module}`).doc(id).update({
-    ...newItem
+    condition: newItem.condition,
+    category: newItem.category,
   }).then(() => {
     console.log("Document successfully updated!");
   }).catch((error) => {

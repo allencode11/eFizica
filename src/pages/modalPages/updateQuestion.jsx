@@ -2,23 +2,22 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { useState } from 'react';
-import { Typography } from '@mui/material';
+import { useCallback, useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import { createQuestion, updateItem } from '../../firebase/firebase.utils';
+import { updateItem } from '../../firebase/firebase.utils';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
 import 'antd/dist/antd.css';
 
 export const UpdateQuestion = (props) => {
   const [questionType, setQuestionType] = useState(props.item.questionType);
-  const [variable, setVariable] = useState(props.item.condition[0]);
-  const [units, setUnits] = useState(props.item.condition[1]);
-  const [lines, setLines] = useState(props.item.condition[3]);
+  const [variable, setVariable] = useState(null);
+  const [units, setUnits] = useState(null);
+  const [lines, setLines] = useState(null);
   const [condition, setCondition] = useState(props.item.condition);
   const [imageUrl, setImageUrl] = useState(null);
-  const [size, setSize] = useState(props.item.condition[2]);
+  const [size, setSize] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const getBase64 = (img, callback) => {
@@ -67,6 +66,36 @@ export const UpdateQuestion = (props) => {
     </div>
   );
 
+  const fetchMyAPI = useCallback(async () => {
+    if (Array.isArray(props.item.condition)) {
+      setCondition(null);
+      switch (props.item.condition.length) {
+        case 2:
+          if(props.item.questionType === 'problem1') {
+            setCondition(props.item.condition[0]);
+            console.log(condition)
+            setLines(props.item.condition[1]);
+            console.log(lines)
+            break;
+          }
+          console.log(condition)
+          setVariable(props.item.condition[0]);
+          setUnits(props.item.condition[1]);
+          break;
+        case 4:
+          setCondition(props.item.condition[0]);
+          setSize(props.item.condition[2]);
+          setLines(props.item.condition[3]);
+          break;
+      }
+    }
+  }, [questionType]);
+
+  useEffect( () => {
+    fetchMyAPI();
+  }, [questionType]);
+
+
   return (
     <div>
       <FormControl fullWidth style={{ marginBottom: 20 }}>
@@ -93,17 +122,17 @@ export const UpdateQuestion = (props) => {
               <TextField
                 style={{ width: '100%', margin: 2}}
                 onChange={handleChangeCondition}
-                value={condition[0]}
                 id="standard-basic"
+                value={condition}
                 label="condition"
                 variant="standard" />
 
               <TextField
                 style={{ width: '100%', margin: 2 }}
                 onChange={handleLines}
-                value={lines}
                 id="standard-basic"
                 label="lines"
+                value={lines}
                 variant="standard" />
 
               <TextField
@@ -149,14 +178,14 @@ export const UpdateQuestion = (props) => {
               <TextField
                 style={{ width: '100%', margin: 2 }}
                 onChange={handleChangeCondition}
-                value={condition[0]}
                 id="standard-basic"
+                value={condition}
                 label="sentence"
                 variant="standard" />
               <TextField
                 style={{ width: '100%', margin: 2 }}
                 onChange={handleLines}
-                value={condition[1]}
+                value={lines}
                 id="standard-basic"
                 label="lines"
                 variant="standard" />
@@ -179,20 +208,20 @@ export const UpdateQuestion = (props) => {
              alert('Item was updated');
               break;
             case 'problem1':
-              await updateItem( {category: questionType, condition: [ condition, lines ]});
-              alert('Item was added');
+              await updateItem( props.item.condition,{category: questionType, condition: [ condition, lines ]}, props.module, props.grade);
+              alert('Item was updated');
               break;
             case 'problem2':
-              await updateItem( {category: questionType, condition: [ condition, imageUrl, size, lines ]});
-              alert('Item was added');
+              await updateItem( props.item.condition,{category: questionType, condition: [ condition, imageUrl, size, lines ]}, props.module, props.grade);
+              alert('Item was updated');
               break;
             case 'correspondence':
-              await updateItem( {category: questionType, condition: [ condition, units]});
-              alert('Item was added');
+              await updateItem( props.item.condition,{category: questionType, condition: [ condition, units]}, props.module, props.grade);
+              alert('Item was updated');
               break;
             case 'boolean':
-              await updateItem( {category: questionType, condition: condition });
-              alert('Item was added');
+              await updateItem( props.item.condition,{category: questionType, condition: condition }, props.module, props.grade);
+              alert('Item was updated');
               break;
           };
           props.changeState();

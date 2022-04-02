@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { auth, isAdmin } from './firebase/firebase.utils';
+import MathJax from 'react-mathjax';
 
 import './App.css';
 
@@ -31,6 +32,7 @@ function App() {
   console.log('email: ', currentUser);
 
   return (
+    <MathJax.Provider>
     <>
       {
         currentUrl === 'eFizica/printedTest' ? null : <Header currentUser={currentUser}/>
@@ -58,7 +60,7 @@ function App() {
             </Routes>
           )
         }
-    </>
+    </></MathJax.Provider>
   );
 }
 

@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/eFizica/static/css/main.e6fe196b.css",
-    "main.js": "/eFizica/static/js/main.1eb9da8b.js",
+    "main.js": "/eFizica/static/js/main.4e3be4aa.js",
     "static/js/787.0fd49245.chunk.js": "/eFizica/static/js/787.0fd49245.chunk.js",
     "static/media/test.pdf": "/eFizica/static/media/test.27876d3dbc4dc0813af7.pdf",
     "static/media/proiectare.png": "/eFizica/static/media/proiectare.26e2175c375d0a02a1f6.png",
@@ -14,11 +14,11 @@
     "static/media/trash.png": "/eFizica/static/media/trash.6925caf360c5e249960b.png",
     "index.html": "/eFizica/index.html",
     "main.e6fe196b.css.map": "/eFizica/static/css/main.e6fe196b.css.map",
-    "main.1eb9da8b.js.map": "/eFizica/static/js/main.1eb9da8b.js.map",
+    "main.4e3be4aa.js.map": "/eFizica/static/js/main.4e3be4aa.js.map",
     "787.0fd49245.chunk.js.map": "/eFizica/static/js/787.0fd49245.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6fe196b.css",
-    "static/js/main.1eb9da8b.js"
+    "static/js/main.4e3be4aa.js"
   ]
 }

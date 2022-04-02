@@ -40,13 +40,13 @@ function App() {
         {
           currentUser ? (
             <Routes>
-              <Route path="/eFizica" element={<HomePage />}/>
-              <Route path="/eFizica/tests" element={<TestPage role={role}/>} />
-              <Route path="/eFizica/lab" element={<LabPage role={role}/>} />
-              <Route path="/eFizica/printedTest" element={<PrintedTest />} />
-              <Route path="/eFizica/plan" element={<PlanPage role={role}/>} />
-              <Route path="/eFizica/calendar" element={<CalendarPage role={role}/>} />
-              <Route path="/eFizica/tables" element={<TablesPage role={role}/>} />
+              <Route path="/" element={<HomePage />}/>
+              <Route path="/tests" element={<TestPage role={role}/>} />
+              <Route path="/lab" element={<LabPage role={role}/>} />
+              <Route path="/printedTest" element={<PrintedTest />} />
+              <Route path="/plan" element={<PlanPage role={role}/>} />
+              <Route path="/calendar" element={<CalendarPage role={role}/>} />
+              <Route path="/tables" element={<TablesPage role={role}/>} />
             </Routes>
           ) :  (
             <Routes>

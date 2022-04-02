@@ -1,4 +1,3 @@
-import { MathComponent } from 'mathjax-react';
 import MathJax from 'react-mathjax';
 
 export const SecondProblemItem = ({item}) => {
@@ -12,7 +11,7 @@ export const SecondProblemItem = ({item}) => {
           }
         </p>
         <img
-          style={{width: `${item.condition[2]}`, display: 'flex', flexDirection: 'row', alignItems:'right', height: 'auto', paddingBottom: 5}} src={item.condition[1]}/>
+          style={{width: `${item.condition[2]}`, height: 'auto', paddingBottom: 5, float: 'right'}} src={item.condition[1]}/>
         {[
           ...Array(Number(item.condition[3])),
         ].map((value, index) => (

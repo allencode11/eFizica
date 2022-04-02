@@ -258,9 +258,10 @@ export const TestPage = (props) => {
                 color: 'white',
                 marginTop: 10,
                 marginBottom: 10,
-                height: 30,
-                position: 'absolute',
-                right: '28%'
+                height: 36,
+                position: 'fixed',
+                right: '5%',
+                top: '13%'
               }}
               onClick={ () => {
                 if (position < selectData.length - 1) {
@@ -280,8 +281,9 @@ export const TestPage = (props) => {
                 padding: 10,
                 borderRadius: 5,
                 fontWeight: 500,
-                position: 'absolute',
-                right: '28%'
+                position: 'fixed',
+                right: '10%',
+                top: '5%'
             }}
               discipline={tests.discipline}
               params={{

@@ -33,12 +33,7 @@ const selectData = [
   },
   {
     section: 'problem1',
-    items: 1,
-    component: 'FirstProblem',
-  },
-  {
-    section: 'problem1',
-    items: 1,
+    items: 2,
     component: 'FirstProblem',
   },
   {
@@ -191,11 +186,13 @@ export const TestPage = (props) => {
                   <CardContent
                     style={{display: 'flex', flexDirection: 'row' }}
                     onClick={ () => {
-                      addToPrint(element);
-                      const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
-                      const newTests = tests;
-                      newTests.questions[index].display = !element.display;
-                      setTests({ ...newTests });
+                      if( element.question.questionType !== 'correspondence' ) {
+                        addToPrint(element);
+                        const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
+                        const newTests = tests;
+                        newTests.questions[index].display = !element.display;
+                        setTests({ ...newTests });
+                      }
                     }}
                   >
                     <div style={{width: '97%'}}>
@@ -205,6 +202,11 @@ export const TestPage = (props) => {
                         ) : element.question.questionType === 'correspondence' ? (
                           <CorrespondenceItem onClick={(text) => {
                             element.question.condition[1] = text;
+                            addToPrint(element);
+                            const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
+                            const newTests = tests;
+                            newTests.questions[index].display = !element.display;
+                            setTests({ ...newTests });
                           }} title={element.question.condition[0]} variants={element.question.condition[1].split(',')}/>
                         ) : element.question.questionType === 'problem1' ? (
                           <FirstProblemItem item={element.question}/>

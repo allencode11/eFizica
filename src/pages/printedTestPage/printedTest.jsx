@@ -55,7 +55,6 @@ export const PrintedTest = (props) => {
         <Typography> Punctaj acumulat: ____</Typography>
         <Typography> Nota: ___</Typography>
         <Typography> Punctaj total: 25</Typography>
-        <Typography><MathComponent tex={String.raw`x^2`} /></Typography>
 
       </div>
       <div style={{
@@ -69,7 +68,6 @@ export const PrintedTest = (props) => {
       }}>
         <Typography> Nume, prenume profesor: ___________________</Typography>
         <Typography> Semnatura: ________________</Typography>
-        <Typography><MathComponent tex={String.raw`\int_0^1 x^2\ dx`} /></Typography>
       </div>
       <div style={{
         width: '100%',

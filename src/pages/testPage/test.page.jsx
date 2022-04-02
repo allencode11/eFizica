@@ -236,7 +236,7 @@ export const TestPage = (props) => {
                     {
                       props.role === 'admin' && <img
                         src={require('../../assets/edit.png')}
-                        style={{width: '3%', height: '4%'}}
+                        style={{width: '3%', height: '4%', cursor: 'pointer'}}
                         onClick={async () => {
                           handleOpenUpdate(!openUpdate);
                           setItemToUpdate(element.question);

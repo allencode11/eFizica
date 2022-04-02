@@ -129,9 +129,9 @@ export const deleteItem = async (module, grade, condition) => {
   console.log(id);
 
   firestore.collection(`physics/${grade}/${module}`).doc(id).delete().then(() => {
-    console.log("Document successfully deleted!");
+    alert("Document successfully deleted!");
   }).catch((error) => {
-    console.error("Error removing document: ", error);
+    alert("Error removing document: ", error);
   });
 
 };

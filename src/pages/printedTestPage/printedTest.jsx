@@ -7,7 +7,6 @@ import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
 import { useLocation, useParams } from 'react-router-dom';
-import { MathComponent } from 'mathjax-react'
 
 export const PrintedTest = (props) => {
   const tests = JSON.parse(localStorage.getItem("selected")) || props.tests;
@@ -30,6 +29,7 @@ export const PrintedTest = (props) => {
       }
     }
 
+    console.log('tests', tests)
     return qArr;
   }
 
@@ -168,6 +168,7 @@ export const PrintedTest = (props) => {
                     ))
                 }
               </div>
+
               {
                 randomise(tests[key]).map((el, index) => {
                   return el.question.questionType === 'complete' ? (
@@ -179,11 +180,13 @@ export const PrintedTest = (props) => {
                                         variants={el.question.condition[1].split(',')}
                     />
                   ) : el.question.questionType === 'problem1' ? (
-                    <FirstProblemItem key={index} style={{ marginBottom: 20, border: '1px solid #cc'}} item={el.question}/>
+                        <FirstProblemItem key={index} style={{ marginBottom: 20, border: '1px solid #cc'}} item={el.question}/>
                   ) : el.question.questionType === 'problem2' ? (
                     <SecondProblemItem key={index} style={{ marginBottom: 20 }} item={el.question}/>
                   ) : el.question.questionType === 'boolean' ? (
                     <BooleanItem key={index} style={{ marginBottom: 20 }} item={el.question}/>
+                  ) : el.question.questionType === 'problem1' ? (
+                      <FirstProblemItem key={index} style={{ marginBottom: 20, border: '1px solid #cc'}} item={el.question}/>
                   ) : null
                 })
               }

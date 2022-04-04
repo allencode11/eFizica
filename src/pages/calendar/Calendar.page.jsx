@@ -53,8 +53,9 @@ export const CalendarPage = (props) => {
   return (
     <div style={{ paddingTop: '2%', paddingLeft: '2%', justifyContent: 'center'}}>
       { calendars ?
-        calendars.image.map(calendar => (
+        calendars.image.map((calendar, index) => (
           <Card
+            key={index}
             style={{width: '98%', marginTop: 20, cursor: 'pointer'}}
             onClick={() => {
               setOpen(!open);

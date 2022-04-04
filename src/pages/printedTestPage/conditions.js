@@ -12,7 +12,7 @@ export const Conditions = [
   {
     "name": "problem1",
     "rule": "În spaţiul rezervat prezentaţi rezolvările succinte ale itemilor.",
-    points: 6
+    points: 3
   },
   {
     "name": "problem2",

@@ -56,6 +56,16 @@ export const TestPage = (props) => {
   let sum = selectData[position].items;
 
   const addToPrint = (question) => {
+    if(question.question.questionType === 'problem2')
+    {
+      if (print['problem1'].length == 2) {
+        print['problem'] = [];
+        print['problem'].push(print['problem1'][0]);
+        print['problem1'].splice(0,1);
+        console.log(print)
+      }
+    }
+
     if (!(question.question.questionType in print)) {
       print[question.question.questionType] = [];
     }
@@ -70,8 +80,8 @@ export const TestPage = (props) => {
       setPrint({ ...print });
     }
 
-    console.log(print[selectData[position].section].length)
   }
+
   const handleGrade = async (event) => {
     setGrade(event.target.value);
   }
@@ -293,6 +303,7 @@ export const TestPage = (props) => {
               grade={tests.grade}
               tests={print}
               onClick={() => {
+                console.log('print', print)
                 localStorage.removeItem("selected");
                 localStorage.removeItem("testData");
                 localStorage.setItem("selected", JSON.stringify(print));

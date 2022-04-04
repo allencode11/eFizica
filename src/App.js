@@ -28,14 +28,12 @@ function App() {
     });
   }, [currentUser]);
 
-  console.log('role: ', role);
-  console.log('email: ', currentUser);
 
   return (
-    <MathJax.Provider>
     <>
+      <Header currentUser={currentUser}/>
       {
-        currentUrl === 'eFizica/printedTest' ? null : <Header currentUser={currentUser}/>
+        console.log(currentUrl)
       }
         {
           currentUser ? (
@@ -60,7 +58,7 @@ function App() {
             </Routes>
           )
         }
-    </></MathJax.Provider>
+    </>
   );
 }
 

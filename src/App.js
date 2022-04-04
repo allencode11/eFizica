@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { auth, isAdmin } from './firebase/firebase.utils';
 import MathJax from 'react-mathjax';
 
@@ -19,6 +19,7 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState(null);
   const [role, setRole] = React.useState('user');
 
+  const location = useLocation()
   const currentUrl = window.location.pathname;
 
   useEffect( () => {
@@ -31,9 +32,8 @@ function App() {
 
   return (
     <>
-      <Header currentUser={currentUser}/>
       {
-        console.log(currentUrl)
+        location.pathname !== '/eFizica/printedTest' ? <Header currentUser={currentUser}/> : null
       }
         {
           currentUser ? (

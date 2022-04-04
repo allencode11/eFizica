@@ -293,7 +293,7 @@ export const TestPage = (props) => {
                 fontWeight: 500,
                 position: 'fixed',
                 right: '10%',
-                top: '5%'
+                top: '13%'
             }}
               discipline={tests.discipline}
               params={{

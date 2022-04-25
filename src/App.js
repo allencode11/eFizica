@@ -19,7 +19,6 @@ function App() {
   const [role, setRole] = React.useState('user');
 
   const location = useLocation()
-  const currentUrl = window.location.pathname;
 
   useEffect( () => {
     auth.onAuthStateChanged( async user => {

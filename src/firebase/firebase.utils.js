@@ -112,10 +112,8 @@ export const signInWithGoogle = async () => {
 
 export const logInWithEmailAndPassword = async (email, password) => {
   try {
-    console.log(email, password)
     await auth.signInWithEmailAndPassword( email, password);
   } catch (err) {
-    console.error(err);
     alert(err.message);
   }
 };

@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { Link } from 'react-router-dom';
 import {Register} from "../../pages/modalPages/register";
 import {Modal} from "@mui/material";
-import { auth, isAdmin } from '../../firebase/firebase.utils';
+import { auth } from '../../firebase/firebase.utils';
 import { SignIn } from '../../pages/modalPages/signin';
 
 const pages = [
@@ -107,6 +107,7 @@ export const Header = ({ currentUser }) => {
                   </Typography>
                 </MenuItem>
               ))}
+
             </Menu>
           </Box>
           <Typography
@@ -144,6 +145,7 @@ export const Header = ({ currentUser }) => {
             </div>
           </Box>
         </Toolbar>
+
         <Modal
           onClose={() => handleOpen(!open)}
           open={open}

@@ -201,7 +201,7 @@ export const TestPage = (props) => {
                         const index = tests.questions.findIndex((elem) => elem.uuid === element.uuid);
                         const newTests = tests;
                         newTests.questions[index].display = !element.display;
-                        setTests({ ...newTests });
+                         setTests({ ...newTests });
                       }
                     }}
                   >
@@ -258,62 +258,65 @@ export const TestPage = (props) => {
               ))}
           </div>
         </div>
+        <div>
+
+        </div>
         {
           print[selectData[position].section] &&
             print[selectData[position].section].length === sum ?
-          position < selectData.length - 1 ?
-            <Button
-              style={{
-                backgroundColor: '#1e90ff',
-                color: 'white',
-                marginTop: 10,
-                marginBottom: 10,
-                height: 36,
-                position: 'fixed',
-                right: '5%',
-                top: '13%'
-              }}
-              onClick={ () => {
-                if (position < selectData.length - 1) {
-                  setPosition(position + 1)
-                  sum += selectData[position].items
-                }
-              }}>
-              Urmatorul
-            </Button> :
-            <Link
-              style={{
-                backgroundColor: '#1e90ff',
-                color:'white',
-                marginTop: 10,
-                marginBottom: 10,
-                height: 40,
-                padding: 10,
-                borderRadius: 5,
-                fontWeight: 500,
-                position: 'fixed',
-                right: '10%',
-                top: '13%'
-            }}
-              discipline={tests.discipline}
-              params={{
-                print,
-              }}
-              module={tests.module}
-              grade={tests.grade}
-              tests={print}
-              onClick={() => {
-                console.log('print', print)
-                localStorage.removeItem("selected");
-                localStorage.removeItem("testData");
-                localStorage.setItem("selected", JSON.stringify(print));
-                localStorage.setItem("testData", JSON.stringify({ discipline: tests.discipline, module: tests.module, grade: tests.grade }));
-              }}
-              to={{
-                pathname: '/eFizica/printedTest',
-              }}>
-              GENEREAZA</Link>
-            : null
+            <div style={{display: 'flex', flexDirection: 'column', position: 'fixed', right: '25px', top: '13%'}}>
+              {
+                position < selectData.length - 1 &&
+                <Button
+                  style={{
+                    backgroundColor: '#1e90ff',
+                    color: 'white',
+                    marginTop: 10,
+                    marginBottom: 10,
+                    height: 36,
+                  }}
+                  onClick={() => {
+                    if (position < selectData.length - 1) {
+                      setPosition(position + 1)
+                      sum += selectData[position].items
+                    }
+                  }}>
+                  Urmatorul
+                </Button>
+              }
+              {
+                [selectData.length - 1, selectData.length - 2, 1].includes(position) &&
+                  <Link
+                    style={{
+                      backgroundColor: '#1e90ff',
+                      color:'white',
+                      marginTop: 10,
+                      marginBottom: 10,
+                      height: 40,
+                      padding: 10,
+                      borderRadius: 5,
+                      fontWeight: 500
+                    }}
+                    discipline={tests.discipline}
+                    params={{
+                      print,
+                    }}
+                    module={tests.module}
+                    grade={tests.grade}
+                    tests={print}
+                    onClick={() => {
+                      console.log('print', print)
+                      localStorage.removeItem("selected");
+                      localStorage.removeItem("testData");
+                      localStorage.setItem("selected", JSON.stringify(print));
+                      localStorage.setItem("testData", JSON.stringify({ discipline: tests.discipline, module: tests.module, grade: tests.grade }));
+                    }}
+                    to={{
+                      pathname: '/eFizica/printedTest',
+                    }}>
+                    GENEREAZA</Link>
+              }
+            </div> : null
         }
       </div>
 
@@ -325,7 +328,9 @@ export const TestPage = (props) => {
       >
         <Box sx={modalStyle}>
          <CreateQuestion />
-          <Button style={{marginTop: 5, width: '100%'}} variant="contained" onClick={() => setOpen(!open)} variant="contained">
+          <Button
+            style={{marginTop: 5, width: '100%'}} variant="contained"
+            onClick={() => setOpen(!open)} variant="contained">
             Finish
           </Button>
         </Box>

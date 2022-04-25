@@ -77,7 +77,7 @@ export const CalendarPage = (props) => {
           customRequest={() => null}
           onChange={onChangeImage}
         >
-          {image ? <img src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
+          {image ? <img alt='image' src={image} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
         </Upload>
       }
       {image ? <Button onClick={ async () => {

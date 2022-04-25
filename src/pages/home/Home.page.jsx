@@ -1,5 +1,5 @@
 import Container from '@mui/material/Container';
-import { Card, CardActions, CardContent, CardMedia, Grid } from '@mui/material';
+import { Card, CardContent, CardMedia, Grid } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
 

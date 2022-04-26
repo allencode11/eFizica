@@ -11,7 +11,7 @@ export const SecondProblemItem = ({item}) => {
           }
         </p>
         <img
-          style={{width: `${item.condition[2]}`, height: 'auto', paddingBottom: 5, float: 'right'}} src={item.condition[1]}/>
+          style={{width: `${item.condition[2]}`, height: 'auto', paddingBottom: 5, float: 'right', maxHeight: '350px'}} src={item.condition[1]}/>
         {[
           ...Array(Number(item.condition[3])),
         ].map((value, index) => (

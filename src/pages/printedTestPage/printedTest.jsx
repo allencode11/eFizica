@@ -6,7 +6,7 @@ import { CorrespondenceItem } from '../../components/Items/Correspondence.compon
 import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 export const PrintedTest = (props) => {
   const tests = JSON.parse(localStorage.getItem("selected")) || props.tests;
@@ -101,7 +101,7 @@ export const PrintedTest = (props) => {
 
         <Typography
           sx={{
-            width: '100%',
+            width: 754,
             textAlign: 'center',
             padding: 0.5,
             borderRight: '2px solid black',

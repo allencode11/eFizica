@@ -22,6 +22,6 @@ export const Conditions = [
   {
     "name": "correspondence",
     "rule": "Asociaţi mărimile fizice cu unităţile lor (uniţi prin săgeţi mărimea fizică cu unitatea corespunzătoare ei).",
-    points: 5
+    points: 6
   }
 ]

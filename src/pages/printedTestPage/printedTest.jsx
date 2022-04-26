@@ -6,16 +6,13 @@ import { CorrespondenceItem } from '../../components/Items/Correspondence.compon
 import { FirstProblemItem } from '../../components/Items/Problem1.component';
 import { SecondProblemItem } from '../../components/Items/Problem2.component';
 import { BooleanItem } from '../../components/Items/Boolean.component';
-import { useLocation } from 'react-router-dom';
 
 export const PrintedTest = (props) => {
   const tests = JSON.parse(localStorage.getItem("selected")) || props.tests;
   const testData = JSON.parse(localStorage.getItem("testData")) || props.tests;
   const [conditions, setConditions] = useState(Conditions);
   let questionCount = 1;
-
-  const location = useLocation()
-  const discipline = location.state?.display
+  const points = Object.keys(tests).length === 2 ? 8 : Object.keys(tests).length === 5 ? 19 : 25;
 
   const randomise = (qArr) => {
     if (qArr[0].question.questionType === 'correspondence') {
@@ -33,8 +30,11 @@ export const PrintedTest = (props) => {
     return qArr;
   }
 
+  const simulateKeypress = () => {
+    window.print();
+  }
   return (
-    <Container maxWidth="md" style={{marginBottom: 20}}>
+    <Container maxWidth="md"  style={{marginBottom: 20}}>
        { /*Datele generale despre test*/ }
       <div style={{
         margin: '10px 0',
@@ -54,7 +54,7 @@ export const PrintedTest = (props) => {
         <Typography> Nume, prenume elev: _________________</Typography>
         <Typography> Punctaj acumulat: ____</Typography>
         <Typography> Nota: ___</Typography>
-        <Typography> Punctaj total: 25</Typography>
+        <Typography> Punctaj total: {points}</Typography>
 
       </div>
       <div style={{
@@ -161,9 +161,8 @@ export const PrintedTest = (props) => {
                   conditions
                     .filter(ruleElement => ruleElement.name === tests[key][0].question.questionType)
                     .map(item => (
-                      <Typography key={item.rule} style={{ fontWeight: 'bold' }}>
+                      <Typography key={item.rule} style={{ fontWeight: 'bold', paddingBottom: 5 }}>
                         {item.rule}
-                        <div style={{height: 10}} />
                       </Typography>
                     ))
                 }

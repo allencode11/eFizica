@@ -7,7 +7,7 @@ export const SecondProblemItem = ({item}) => {
       <div style={{flexDirection: 'column'}}>
         <p>
           {
-            condition.map((element, index) => index % 2 === 0 ? element: (<MathJax.Node inline formula={element} />))
+            condition.map((element, index) => index % 2 === 0 ? element: (<MathJax.Node key={index} inline formula={element} />))
           }
         </p>
         <img

@@ -8,7 +8,7 @@ export const FirstProblemItem = ({item}) => {
       <div>
         <p>
           {
-            condition.map((element, index) => index % 2 === 0 ? element: (<MathJax.Node inline formula={element} />))
+            condition.map((element, index) => index % 2 === 0 ? element: (<MathJax.Node key={index} inline formula={element} />))
           }
         </p>
         {

@@ -56,16 +56,6 @@ export const TestPage = (props) => {
   let sum = selectData[position].items;
 
   const addToPrint = (question) => {
-    if(question.question.questionType === 'problem2')
-    {
-      if (print['problem1'].length == 2) {
-        print['problem'] = [];
-        print['problem'].push(print['problem1'][0]);
-        print['problem1'].splice(0,1);
-        console.log(print)
-      }
-    }
-
     if (!(question.question.questionType in print)) {
       print[question.question.questionType] = [];
     }
@@ -78,6 +68,16 @@ export const TestPage = (props) => {
         ...question
       });
       setPrint({ ...print });
+    }
+
+    if(question.question.questionType === 'problem1')
+    {
+      if (print['problem1'].length == 2) {
+        print['problem'] = [];
+        print['problem'].push(print['problem1'][0]);
+        print['problem1'].splice(0,1);
+        setPrint({ ...print });
+      }
     }
 
   }
@@ -186,9 +186,9 @@ export const TestPage = (props) => {
               tests.questions &&
               tests.questions
               .filter(item => item.question.questionType === selectData[position].section)
-              .map((element) => (
+              .map((element, index) => (
                 <Card
-                  key={element.uuid}
+                  key={index}
                   style={{
                     margin: '20px 0 0 0',
                     border: element.display ? '1px solid #1e90ff' : '1px solid #ccc',
@@ -263,7 +263,7 @@ export const TestPage = (props) => {
         </div>
         {
           print[selectData[position].section] &&
-            print[selectData[position].section].length === sum ?
+            print[selectData[position].section].length === sum || print['problem']?.length === 1 ?
             <div style={{display: 'flex', flexDirection: 'column', position: 'fixed', right: '25px', top: '13%'}}>
               {
                 position < selectData.length - 1 &&

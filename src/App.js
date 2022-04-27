@@ -36,6 +36,7 @@ function App() {
         {
           currentUser ? (
             <Routes>
+              <Route path="/" element={<HomePage />}/>
               <Route path="/eFizica" element={<HomePage />}/>
               <Route path="/eFizica/tests" element={<TestPage role={role}/>} />
               <Route path="/eFizica/lab" element={<LabPage role={role}/>} />

@@ -217,9 +217,6 @@ export const PrintedTest = (props) => {
           </div>
         ))
       }
-      <Typography sx={{color: 'grey', fontSize: 10, margin: 2, textAlign: 'center'}}>
-        Enache Alic  :   https://allencode11.github.io/eFizica
-      </Typography>
     </Container>
   )
 }

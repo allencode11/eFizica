@@ -23,7 +23,7 @@ const selectData = [
   },
   {
     section: 'correspondence',
-    items: 5,
+    items: 3,
     component: 'Correspondence',
   },
   {

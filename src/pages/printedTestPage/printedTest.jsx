@@ -12,7 +12,7 @@ export const PrintedTest = (props) => {
   const testData = JSON.parse(localStorage.getItem("testData")) || props.tests;
   const [conditions, setConditions] = useState(Conditions);
   let questionCount = 1;
-  const points = Object.keys(tests).length === 2 ? 8 : Object.keys(tests).length === 5 ? 19 : 25;
+  const points = Object.keys(tests).length === 2 ? 6 : Object.keys(tests).length === 5 ? 17 : 25;
 
   const randomise = (qArr) => {
     if (qArr[0].question.questionType === 'correspondence') {

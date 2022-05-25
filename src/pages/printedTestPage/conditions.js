@@ -17,11 +17,11 @@ export const Conditions = [
   {
     "name": "problem2",
     "rule": "În spaţiul rezervat prezentaţi rezolvarea completă a itemului.",
-    points: 6
+    points: 8
   },
   {
     "name": "correspondence",
     "rule": "Asociaţi mărimile fizice cu unităţile lor (uniţi prin săgeţi mărimea fizică cu unitatea corespunzătoare ei).",
-    points: 5
+    points: 3
   }
 ]

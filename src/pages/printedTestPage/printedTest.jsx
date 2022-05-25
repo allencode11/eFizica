@@ -19,8 +19,7 @@ export const PrintedTest = (props) => {
       const randomIndexes = [...Array(qArr.length).keys()]
         .sort((a, b) => 0.3 - Math.random());
       console.log(randomIndexes, 'random');
-
-      if(randomIndexes == [0, 1, 2]) {
+      if(randomIndexes[0] === 0 && randomIndexes[1] === 1) {
         randomise(qArr);
       } else {
         const tmpArr = qArr.map((el) => ({...el, question: {...el.question, condition: [...el.question.condition] } }));

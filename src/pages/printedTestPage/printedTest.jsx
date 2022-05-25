@@ -17,16 +17,20 @@ export const PrintedTest = (props) => {
   const randomise = (qArr) => {
     if (qArr[0].question.questionType === 'correspondence') {
       const randomIndexes = [...Array(qArr.length).keys()]
-        .sort((a, b) => 0.5 - Math.random());
+        .sort((a, b) => 0.3 - Math.random());
       console.log(randomIndexes, 'random');
-      const tmpArr = qArr.map((el) => ({...el, question: {...el.question, condition: [...el.question.condition] } }));
 
-      for (let i = 0; i < qArr.length; i++) {
-        qArr[i].question.condition[1] = tmpArr[randomIndexes[i]].question.condition[1];
+      if(randomIndexes == [0, 1, 2]) {
+        randomise(qArr);
+      } else {
+        const tmpArr = qArr.map((el) => ({...el, question: {...el.question, condition: [...el.question.condition] } }));
+
+        for (let i = 0; i < qArr.length; i++) {
+          qArr[i].question.condition[1] = tmpArr[randomIndexes[i]].question.condition[1];
+        }
       }
     }
 
-    console.log('tests', tests)
     return qArr;
   }
 
@@ -127,7 +131,6 @@ export const PrintedTest = (props) => {
           Scor
         </Typography>
       </Container>
-
       {
         Object.keys(tests) &&
         Object.keys(tests).map((key) => (
@@ -167,7 +170,6 @@ export const PrintedTest = (props) => {
                     ))
                 }
               </div>
-
               {
                 randomise(tests[key]).map((el, index) => {
                   return el.question.questionType === 'complete' ? (

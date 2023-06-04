@@ -8,7 +8,6 @@ import Button from '@mui/material/Button';
 import { updateItem } from '../../firebase/firebase.utils';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
-import 'antd/dist/antd.css';
 
 export const UpdateQuestion = (props) => {
   const [questionType, setQuestionType] = useState(props.item.questionType);

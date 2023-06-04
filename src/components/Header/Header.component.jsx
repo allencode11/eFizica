@@ -68,7 +68,7 @@ export const Header = ({ currentUser }) => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            <Link style={{ color: 'white' }} to={"/eFizica"}>eFizica</Link>
+            <Link style={{ color: 'white' }} to={"/"}>eSchool</Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -116,7 +116,7 @@ export const Header = ({ currentUser }) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
           >
-            <Link style={{ color: 'white' }} to={"/"}>eFizica</Link>
+            <Link style={{ color: 'white' }} to={"/"}>eSchool</Link>
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -132,7 +132,7 @@ export const Header = ({ currentUser }) => {
               {
                 currentUser ? (
                   <div>
-                    <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Deconectează-mă</Button>
+                    <Button style={{color: 'white'}} onClick={() => auth.signOut()}>Deconectare</Button>
                   </div>
                 ) : (
                   <div>

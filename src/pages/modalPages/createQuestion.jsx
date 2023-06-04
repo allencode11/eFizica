@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { createQuestion } from '../../firebase/firebase.utils';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload, message } from 'antd';
-import 'antd/dist/antd.css';
+import 'antd/dist/reset.css';
 
 export const CreateQuestion = () => {
   const [questionType, setQuestionType] = useState(null);

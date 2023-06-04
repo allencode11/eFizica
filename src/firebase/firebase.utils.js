@@ -58,10 +58,24 @@ export const isAdmin = async (email) => {
 
 };
 
-export const createQuestion = async ( grade, module, {...question }) => {
+export const isStudent = async (email) => {
+  const usersRef = firestore.collection('users');
+  const querySnapshot = await usersRef.get();
+
+  const response = [];
+
+  querySnapshot.docs.forEach(item=>{
+    if (item.data().email === email) {
+      response.push(item.data());
+    }
+  })
+  return response[0].status != 'student' ? false : true;
+
+};
+export const createQuestion = async ( grade, module, {...question }, discipline = 'physics') => {
   if(!question && !grade && !module) return;
 
-  const questionRef = firestore.collection(`physics/${grade}/${module}`);
+  const questionRef = firestore.collection(`${discipline}/${grade}/${module}`);
   const createdAt = new Date();
 
   try {
@@ -76,12 +90,12 @@ export const createQuestion = async ( grade, module, {...question }) => {
   return;
 }
 
-export const getQuestion = async ( grade, module ) => {
+export const getQuestion = async ( grade, module, discipline = 'physics' ) => {
   if(!grade && !module) return;
 
   const itemsArr = [];
 
-  const questionRef = firestore.collection(`physics/${grade}/${module}`);
+  const questionRef = firestore.collection(`${discipline}/${grade}/${module}`);
   const querySnapshot = await questionRef.get();
 
   querySnapshot.docs.forEach(item=>{
@@ -91,7 +105,7 @@ export const getQuestion = async ( grade, module ) => {
   })
 
   return [{
-    "discipline": 'Fizica',
+    "discipline": discipline,
     "grade": grade,
     "module": module,
     "questions": itemsArr,
@@ -134,13 +148,27 @@ export const deleteItem = async (module, grade, condition) => {
 
 };
 
-export const updateItem = async ( condition, newItem, module, grade ) => {
-  const itemsRef = await firestore.collection(`physics/${grade}/${module}`).where('condition', '==', condition);
+export const deleteItemRP = async (module, grade, ID, discipline) => {
+  const itemsRef = await firestore.collection(`${discipline}/${grade}/${module}`).where('id', '==', ID);
+  const item = await itemsRef.get();
+
+  const id = item.docs[0].id;
+  console.log(id);
+
+  firestore.collection(`${discipline}/${grade}/${module}`).doc(id).delete().then(() => {
+    alert("Document successfully deleted!");
+  }).catch((error) => {
+    alert("Error removing document: ", error);
+  });
+
+};
+export const updateItem = async ( condition, newItem, module, grade, discipline = 'physics' ) => {
+  const itemsRef = await firestore.collection(`${discipline}/${grade}/${module}`).where('condition', '==', condition);
   const item = await itemsRef.get();
 
   const id = item.docs[0].id;
   console.log(newItem);
-  firestore.collection(`physics/${grade}/${module}`).doc(id).update({
+  firestore.collection(`${discipline}/${grade}/${module}`).doc(id).update({
     condition: newItem.condition,
     category: newItem.category,
   }).then(() => {

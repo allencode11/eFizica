@@ -1,7 +1,9 @@
 import Container from "@mui/material/Container";
 import {Card, Grid} from "@mui/material";
-import file1 from "../../pdf/test.pdf";
-import file2 from "../../pdf/licenta copie final.pdf";
+import file1 from "../../pdf/LL1.pdf";
+import file2 from "../../pdf/LL3.pdf";
+import file3 from "../../pdf/LL2.pdf";
+import file4 from "../../pdf/LL3.pdf";
 
 export const LabPage = () => {
     return (
@@ -45,7 +47,7 @@ export const LabPage = () => {
                                 onClick={() => {}}
                             >
                                 <object
-                                    data={file1}
+                                    data={file3}
                                     type="application/pdf"
                                     width="100%"
                                     style={{ height: "450px" }}
@@ -60,7 +62,7 @@ export const LabPage = () => {
                                 onClick={() => {}}
                             >
                                 <object
-                                    data={file2}
+                                    data={file4}
                                     type="application/pdf"
                                     width="100%"
                                     style={{ height: "450px" }}

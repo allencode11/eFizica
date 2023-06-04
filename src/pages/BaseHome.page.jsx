@@ -22,7 +22,7 @@ const cards = [
   },
   {
     id: 3,
-    image: require('../assets/physics.png'),
+    image: require('../assets/magnet.png'),
     heading: 'Fizica',
     content: 'Accesează resursele disponibile pentru disciplina fizica',
     location: '/eFizica',
@@ -33,31 +33,33 @@ const cards = [
 export const BaseHomePage = () => {
   const navigate = useNavigate();
   return (
-    <Container sx={{ marginTop: 10 }} justifyContent={"center"} maxWidth={'xl'}>
-      <Grid container spacing={5}>
-        {cards.map((card) => (
-          <Grid item key={card.id} sm={2.4} >
-            <Card
-              sx={{ display: 'flex', flexDirection: 'column', cursor: 'pointer' }}
-              onClick={() => navigate(card.location)}
-            >
-              <CardMedia
-                component="img"
-                image={card.image}
-                alt="random"
-              />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h5" component="h2" sx={{textAlign: 'center'}}>
-                  { card.heading }
-                </Typography>
-                <Typography sx={{color: '#1e90ff', textAlign: 'center', fontSize: 15}}>
-                  { card.content }
-                </Typography>
-              </CardContent>
-            </Card>
+      <div style={{display: "flex", justifyContent: "center", marginLeft: "200px"}}>
+        <Container sx={{ marginTop: 10}} maxWidth={'xl'}>
+          <Grid container spacing={5}>
+            {cards.map((card) => (
+                <Grid item key={card.id} sm={3} >
+                  <Card
+                      sx={{ display: 'flex', flexDirection: 'column', cursor: 'pointer' }}
+                      onClick={() => navigate(card.location)}
+                  >
+                    <CardMedia
+                        component="img"
+                        image={card.image}
+                        alt="random"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2" sx={{textAlign: 'center'}}>
+                        { card.heading }
+                      </Typography>
+                      <Typography sx={{color: '#1e90ff', textAlign: 'center', fontSize: 15}}>
+                        { card.content }
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
-    </Container>
+        </Container>
+      </div>
   );
 }

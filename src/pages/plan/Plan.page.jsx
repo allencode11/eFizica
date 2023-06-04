@@ -1,8 +1,10 @@
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import {Card, Grid} from "@mui/material";
 import Container from "@mui/material/Container";
-import file1 from "../../pdf/test.pdf";
-import file2 from "../../pdf/licenta copie final.pdf";
+import file1 from "../../pdf/P1.pdf";
+import file2 from "../../pdf/P3.pdf";
+import file3 from "../../pdf/P2.pdf";
+import file4 from "../../pdf/P3.pdf";
 export const PlanPage = (props) => {
 
   return (
@@ -46,7 +48,7 @@ export const PlanPage = (props) => {
                             onClick={() => {}}
                         >
                             <object
-                                data={file1}
+                                data={file3}
                                 type="application/pdf"
                                 width="100%"
                                 style={{ height: "450px" }}
@@ -61,7 +63,7 @@ export const PlanPage = (props) => {
                             onClick={() => {}}
                         >
                             <object
-                                data={file2}
+                                data={file4}
                                 type="application/pdf"
                                 width="100%"
                                 style={{ height: "450px" }}
